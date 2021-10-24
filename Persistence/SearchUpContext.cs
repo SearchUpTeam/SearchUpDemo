@@ -10,8 +10,8 @@ namespace Persistence
         public DbSet<Event> Events { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Chat> Chats { get; set; }
-        public DbSet<Avatar> Avatars { get; set; }
         public DbSet<File> Files { get; set; }
+        public DbSet<Avatar> Avatars { get; set; }
         public DbSet<EventAttachedFile> EventFiles { get; set; }
         public DbSet<MessageAttachedFile> MessageFiles { get; set; }
         public SearchUpContext(DbContextOptions<SearchUpContext> options) : base(options)
