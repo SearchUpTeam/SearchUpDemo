@@ -6,8 +6,6 @@ namespace Domain
     {
         img, video, document
     }
-
-    [NotMapped]
     public abstract class File
     {
         public int Id { get; set; }
