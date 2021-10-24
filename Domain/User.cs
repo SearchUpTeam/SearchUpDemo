@@ -16,7 +16,7 @@ namespace Domain
         public DateTime BirthDate { get; set; }
         public string About { get; set; }
         [Required]
-        public string Avatar { get; set; }
+        public virtual ICollection<Avatar> Avatars { get; set; }
         [Required]
         public virtual ICollection<InterestTag> Interests { get; set; }
         public virtual ICollection<User> Followers { get; set; }

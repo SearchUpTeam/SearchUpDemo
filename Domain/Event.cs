@@ -17,6 +17,5 @@ namespace Domain
         public virtual ICollection<InterestTag> Topics { get; set; }
         public virtual ICollection<EventAttachedFile> AttachedFiles { get; set; }
         public Chat Chat { get; set; } 
-        public int ChatId { get; set; }
     }
 }

@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Domain
 {
-    public class MessageAttachedFile
+    public class MessageAttachedFile : File
     {
         [Required]
         public Message Message { get; set; }
