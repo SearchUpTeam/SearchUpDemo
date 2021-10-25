@@ -5,11 +5,13 @@ namespace Persistence
 {
     public class SearchUpContext : DbContext
     {
-        public DbSet<User> Users { get; set; }
+        public DbSet<User> User { get; set; }
         public DbSet<InterestTag> InterestTags { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Message> Messages { get; set; }
         public DbSet<Chat> Chats { get; set; }
+        public DbSet<EventChat> EventChats { get; set; }
+        public DbSet<UserChat> UserChats { get; set; }
         public DbSet<File> Files { get; set; }
         public DbSet<Avatar> Avatars { get; set; }
         public DbSet<EventAttachedFile> EventFiles { get; set; }
@@ -25,7 +27,7 @@ namespace Persistence
             // FOLLOWING CONSTRAINS
             // set composite key
             modelBuilder.Entity<Following>().HasKey(following => new { following.FollowerId, following.FollowedId });
-            // refernces and delete behavior between following and user entities
+            // references and delete behavior between following and user entities
             modelBuilder.Entity<Following>()
                 .HasOne(f => f.Follower)
                 .WithMany(follower => follower.Follows)

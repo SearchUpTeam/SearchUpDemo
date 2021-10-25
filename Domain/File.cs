@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain
 {
@@ -10,6 +10,7 @@ namespace Domain
     {
         public int Id { get; set; }
         public FileType FileType { get; set; }
+        [Required]
         public string Path { get; set; }
     }
 }
