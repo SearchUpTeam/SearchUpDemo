@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 namespace Domain
 {
-    class Following
+    public class Following
     {
+        public User Follower { get; set; }
+        public User Followed { get; set; }
+
+        public int FollowerId { get; set; }
+        public int FollowedId { get; set; }
     }
 }

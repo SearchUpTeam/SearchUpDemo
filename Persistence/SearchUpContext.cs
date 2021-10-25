@@ -14,9 +14,26 @@ namespace Persistence
         public DbSet<Avatar> Avatars { get; set; }
         public DbSet<EventAttachedFile> EventFiles { get; set; }
         public DbSet<MessageAttachedFile> MessageFiles { get; set; }
+        
         public SearchUpContext(DbContextOptions<SearchUpContext> options) : base(options)
         {
             Database.EnsureCreated();
+        }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            // FOLLOWING CONSTRAINS
+            // set composite key
+            modelBuilder.Entity<Following>().HasKey(following => new { following.FollowerId, following.FollowedId });
+            // refernces and delete behavior between following and user entities
+            modelBuilder.Entity<Following>()
+                .HasOne(f => f.Follower)
+                .WithMany(follower => follower.Follows)
+                .OnDelete(DeleteBehavior.NoAction);
+            modelBuilder.Entity<Following>()
+                .HasOne(f => f.Followed)
+                .WithMany(followed => followed.Followers)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
