@@ -2,10 +2,9 @@
 
 namespace Domain
 {
-    public class Chat
+    public abstract class Chat
     {
         public int Id { get; set; }
-        public virtual ICollection<User> Participants { get; set; }
         public virtual ICollection<Message> Messages { get; set; }
     }
 }
