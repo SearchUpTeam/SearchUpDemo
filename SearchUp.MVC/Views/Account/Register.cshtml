@@ -14,15 +14,15 @@
         </header>
         <div class="content">
             <div class="sighUpForm">
-                <form method="post">
-                    <p>Username</p>
-                    <input type="text">
+                <form method="post" asp-controller="Account" asp-action="Register">
                     <p>Email</p>
-                    <input type="email">
+                    <input asp-for="Email" type="email">
+                    <p>BirthDate</p>
+                    <input asp-for="BirthDate" type="date">
                     <p>Password</p>
-                    <input type="password">
+                    <input asp-for="Password" type="password">
                     <p>Confirm password</p>
-                    <input type="password">
+                    <input asp-for="PasswordConfirm" type ="password">
                     <p><input type="submit" value="Sign up"></p>
                 </form>
             </div>
