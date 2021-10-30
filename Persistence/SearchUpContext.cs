@@ -1,9 +1,10 @@
 ﻿using Domain;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence
 {
-    public class SearchUpContext : DbContext
+    public class SearchUpContext : IdentityDbContext<User>
     {
         public DbSet<User> User { get; set; }
         public DbSet<InterestTag> InterestTags { get; set; }
@@ -12,7 +13,6 @@ namespace Persistence
         public DbSet<Chat> Chats { get; set; }
         public DbSet<EventChat> EventChats { get; set; }
         public DbSet<UserChat> UserChats { get; set; }
-        public DbSet<File> Files { get; set; }
         public DbSet<Avatar> Avatars { get; set; }
         public DbSet<EventAttachedFile> EventFiles { get; set; }
         public DbSet<MessageAttachedFile> MessageFiles { get; set; }
@@ -36,6 +36,7 @@ namespace Persistence
                 .HasOne(f => f.Followed)
                 .WithMany(followed => followed.Followers)
                 .OnDelete(DeleteBehavior.NoAction);
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
