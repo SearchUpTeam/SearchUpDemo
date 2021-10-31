@@ -25,7 +25,7 @@ namespace SearchUp.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = new User { Email = model.Email, UserName = model.Email, BirthDate = model.BirthDate };
+                User user = new User { Email = model.Email, UserName = model.Username, BirthDate = model.BirthDate };
                 // добавляем пользователя
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
