@@ -1,0 +1,70 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.5;
+    color: #000000;
+    min-height: 100vh;
+}
+
+.container{
+    width: 80%;
+    margin: auto;
+}
+
+.header-inner, .footer-inner{
+    padding: 20px 0;
+}
+
+a{
+    color: black;
+    text-decoration: none;
+}
+.post-link{
+    background: none;
+    border: none;
+    font-size: 20px;
+    font-weight: lighter;
+
+}
+.post-link, a {
+    transition: color 0.2s linear;
+}
+.post-link:hover, a:hover { /* псевдокласи *:hower - змінюють стан об'єктів класу при наведені мишкою */
+    color: #00A676 /* властивість, що змінюється */
+}
+
+.horizontal-flex-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo{
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.nav-link{
+    font-size: bold;
+    font-size: 18px;
+    padding: 20px;
+}
+
+/*content*/
+
+.content{
+    flex: 1;
+    text-align: center;
+}
+
+/*footer*/
+.footer-inner{
+    height: 70px;
+    justify-content: center;
+}
