@@ -1,0 +1,28 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "UserProfile";
+}
+@model Application.ViewModels.UserProfileViewModel
+
+<div class="subheader_inner">
+    <nav class="nav">
+        <a class="nav_link" href="#">My profile</a>
+        <a class="nav_link" href="#">Friends</a>
+        <a class="nav_link" href="#">Visited events</a>
+        <a class="nav_link" href="#">My events</a>
+        <a class="nav_link" href="#">Find event</a>
+    </nav>
+</div>
+<div class="content">
+    <div class="userInfo">
+        <div class="photo"></div>
+        <div class="bustle">
+            <h1>
+                @Model.Username
+            </h1>
+            <p>@Model.About</p>
+            <div class="events"></div>
+            <h2>Events</h2>
+        </div>
+    </div>
+</div>

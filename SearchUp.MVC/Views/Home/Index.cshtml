@@ -1,8 +1,21 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="home-index-content">
+    <div class="intro">
+        <div class="intro_inner">
+            <h1 class="intro_title">What is this site for?</h1>
+        </div>
+    </div>
+    <div class="subintro">
+        <div class="subintro_inner">
+            @if (User.Identity.IsAuthenticated)
+            {
+                <p>@User.Identity.Name</p>
+            }
+        </div>
+    </div>
 </div>
+ 
