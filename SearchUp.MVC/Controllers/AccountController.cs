@@ -45,12 +45,9 @@ namespace SearchUp.MVC.Controllers
             return View(model);
         }
         [HttpGet]
-        public IActionResult Login(string returnUrl)
+        public IActionResult Login()
         {
-            return View(new LoginViewModel()
-            {
-                ReturnUrl = returnUrl
-            });
+            return View();
         }
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
@@ -61,15 +58,7 @@ namespace SearchUp.MVC.Controllers
                     await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
-                    // проверяем, принадлежит ли URL приложению
-                    if (!string.IsNullOrEmpty(model.ReturnUrl) && Url.IsLocalUrl(model.ReturnUrl))
-                    {
-                        return Redirect(model.ReturnUrl);
-                    }
-                    else
-                    {
-                        return RedirectToAction("Index", "Home");
-                    }
+                    return RedirectToAction("Index", "UserProfile");
                 }
                 else
                 {
