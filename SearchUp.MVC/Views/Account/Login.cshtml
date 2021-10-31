@@ -7,8 +7,7 @@
 
 <div class="login-content">
     <div class="sighUpForm">
-        <form method="post" asp-controller="Account" asp-action="Login"
-              asp-route-returnUrl="@Model.ReturnUrl">
+        <form method="post" asp-controller="Account" asp-action="Login">
             <div>
                 <label asp-for="Email"></label><br />
                 <input asp-for="Email" />

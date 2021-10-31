@@ -1,61 +1,28 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>SearchUp</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,800;0,900;1,100;1,200;1,800&display=swap" rel="stylesheet">
-</head>
-<body>
-    <header class="header">
-        <div class="header_inner">
-            <div class="logo">SearchUp</div>
-            <nav class="nav">
-                <form method="post" asp-controller="Account" asp-action="Logout">
-                    <input type="submit" value="Log out" />
-                </form>
-                @*<a class="nav_link" asp-controller="Account" asp-action="Logout">Log out</a>*@
-            </nav>
-        </div>
-        <div class="subheader_inner"
-            <nav class="nav">
-                <a class="nav_link" href="#">My profile</a>
-                <a class="nav_link" href="#">Friends</a>
-                <a class="nav_link" href="#">Visited events</a>
-                <a class="nav_link" href="#">My events</a>
-                <a class="nav_link" href="#">Find event</a>
-            </nav>
-        </div>
-    </header>
-    <div class="content">
-        <div class="userInfo">
-            <div class="photo"></div>
-            <div class="bustle">
-                <h1>
-                    @if (User.Identity.IsAuthenticated)
-                    {
-                        @User.Identity.Name
-                    }
-                </h1>
-                <p>description</p>
-                <div class="events"></div>
-                <h2>Events</h2>
-                <ul>
-                    <li>...</li>
-                    <li>...</li>
-                    <li>...</li>
-                    <li>...</li>
-                </ul>
-            </div>
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "UserProfile";
+}
+@model Application.ViewModels.UserProfileViewModel
+
+<div class="subheader_inner">
+    <nav class="nav">
+        <a class="nav_link" href="#">My profile</a>
+        <a class="nav_link" href="#">Friends</a>
+        <a class="nav_link" href="#">Visited events</a>
+        <a class="nav_link" href="#">My events</a>
+        <a class="nav_link" href="#">Find event</a>
+    </nav>
+</div>
+<div class="content">
+    <div class="userInfo">
+        <div class="photo"></div>
+        <div class="bustle">
+            <h1>
+                @Model.Username
+            </h1>
+            <p>@Model.About</p>
+            <div class="events"></div>
+            <h2>Events</h2>
         </div>
     </div>
-    <footer class="footer">
-        <div class="footer_inner">
-            <a class="nav_link" href="#">About us</a>
-            <a class="nav_link" href="#">About project</a>
-        </div>
-    </footer>
-</body>
-</html>
+</div>

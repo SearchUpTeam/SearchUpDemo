@@ -14,14 +14,6 @@
             @if (User.Identity.IsAuthenticated)
             {
                 <p>@User.Identity.Name</p>
-                <form method="post" asp-controller="Account" asp-action="Logout">
-                    <input class="post-link" type="submit" value="Выход" />
-                </form>
-            }
-            else
-            {
-                <a asp-controller="Account" asp-action="Login">Log In</a>
-                <a asp-controller="Account" asp-action="Register">Sign Up</a>
             }
         </div>
     </div>
