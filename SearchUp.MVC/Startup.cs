@@ -1,3 +1,4 @@
+using Application;
 using Domain;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -33,6 +34,7 @@ namespace SearchUp.MVC
                 opts.Password.RequireLowercase = false;
             })
                 .AddEntityFrameworkStores<SearchUpContext>();
+            services.AddServices();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

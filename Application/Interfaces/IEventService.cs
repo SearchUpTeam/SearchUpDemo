@@ -1,13 +1,14 @@
 ﻿using System.Threading.Tasks;
 using System.Collections.Generic;
+using Domain;
 
 namespace Application.Interfaces
 {
     public interface IEventService
     {
-        Task CreateAsync(EventViewModel eventModel);
-        Task<IEnumerable<EventViewModel>> GetEventsAsync(int userId);
-        Task Update(EventViewModel eventModel);
-        Task DeleteAsync(EventViewModel eventModel);
+        Task CreateAsync(Event eventModel);
+        Task<IEnumerable<Event>> GetEventsAsync(string userId);
+        Task Update(Event eventModel);
+        Task DeleteAsync(Event eventModel);
     }
 }

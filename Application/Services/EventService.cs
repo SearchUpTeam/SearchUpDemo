@@ -1,6 +1,9 @@
 ﻿using Application.Interfaces;
+using Domain;
 using Persistence;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Services
 {
@@ -11,26 +14,28 @@ namespace Application.Services
         {
             _context = context;
         }
-        public async Task CreateAsync(EventViewModel eventModel)
+        public async Task CreateAsync(Event eventModel)
         {
-            throw new System.NotImplementedException();
-            //some actions
+            await _context.Events.AddAsync(eventModel);
             await _context.SaveChangesAsync();
         }
 
-        public Task DeleteAsync(EventViewModel eventModel)
+        public async Task DeleteAsync(Event eventModel)
         {
-            throw new System.NotImplementedException();
+            _context.Events.Remove(eventModel);
+            await _context.SaveChangesAsync();
         }
 
-        public Task<System.Collections.Generic.IEnumerable<EventViewModel>> GetEventsAsync(int userId)
+        public async Task<IEnumerable<Event>> GetEventsAsync(string userId)
         {
-            throw new System.NotImplementedException();
+            var user = await _context.Users.FindAsync(userId);
+            return user.Events;
         }
 
-        public Task Update(EventViewModel eventModel)
+        public async Task Update(Event eventModel)
         {
-            throw new System.NotImplementedException();
+            _context.Entry(eventModel).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
     }
 }
