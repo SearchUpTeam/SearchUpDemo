@@ -26,7 +26,7 @@ namespace Application.Services
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Event>> GetEventsAsync(string userId)
+        public async Task<IEnumerable<Event>> GetEventsAsync(int userId)
         {
             var user = await _context.Users.FindAsync(userId);
             return user.Events;

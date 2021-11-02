@@ -1,10 +1,11 @@
 ﻿using Domain;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence
 {
-    public class SearchUpContext : IdentityDbContext<User>
+    public class SearchUpContext : IdentityDbContext<User,IdentityRole<int>,int>
     {
         public DbSet<User> User { get; set; }
         public DbSet<InterestTag> InterestTags { get; set; }

@@ -7,7 +7,7 @@ namespace Application.Interfaces
     public interface IEventService
     {
         Task CreateAsync(Event eventModel);
-        Task<IEnumerable<Event>> GetEventsAsync(string userId);
+        Task<IEnumerable<Event>> GetEventsAsync(int userId);
         Task Update(Event eventModel);
         Task DeleteAsync(Event eventModel);
     }

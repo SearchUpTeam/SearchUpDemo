@@ -26,7 +26,7 @@ namespace SearchUp.MVC
             services.AddControllersWithViews();
             services.AddDbContext<SearchUpContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            services.AddIdentity<User, IdentityRole>(opts => {
+            services.AddIdentity<User, IdentityRole<int>>(opts => {
                 opts.Password.RequiredLength = 5;
                 opts.Password.RequireDigit = true;
                 opts.Password.RequireNonAlphanumeric = false;
