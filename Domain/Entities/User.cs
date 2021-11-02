@@ -14,6 +14,7 @@ namespace Domain
         public ICollection<Following> Followers { get; set; }
         public ICollection<Event> Events { get; set; }
         public ICollection<Message> Messages { get; set; }
-        public ICollection<UserChat> Chats { get; set; }
+        public ICollection<Chat> Chats { get; set; }
+        public ICollection<Member> Members { get; set; }
     }
 }
