@@ -8,7 +8,6 @@ namespace Domain
         public int Id { get; set; }
         public ChatType ChatType { get; set; }
         public ICollection<Message> Messages { get; set; }
-        public ICollection<User> Participants { get; set; }
-        public ICollection<Member> Members { get; set; }
+        public ICollection<ChatMembership> memberships { get; set; }
     }
 }
