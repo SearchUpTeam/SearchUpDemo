@@ -6,6 +6,8 @@ namespace SearchUp.MVC.Controllers
     {
         public IActionResult Index()
         {
+            if (User.Identity.IsAuthenticated)
+                return RedirectToAction("Index", "UserProfile");
             return View();
         }
     }

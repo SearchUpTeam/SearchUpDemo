@@ -11,12 +11,11 @@ namespace SearchUp.MVC.Controllers
     public class UserProfileController : Controller
     {
         private readonly UserManager<User> _userManager;
-
         public UserProfileController(UserManager<User> userManager)
         {
             _userManager = userManager;
         }
-        [HttpGet]
+        [Route("UserProfile")]
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
