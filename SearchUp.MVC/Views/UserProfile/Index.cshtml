@@ -23,6 +23,15 @@
             <p>@Model.About</p>
             <div class="events"></div>
             <h2>Events</h2>
+            @foreach (var eventObj in Model.Events)
+            {
+                <div class="event">
+                    <h3>@eventObj.Title</h3>
+                    <p>Description: @eventObj.Description</p>
+                    <p>Start Time: @eventObj.StartTime</p>
+                    <p>End Time: @eventObj.EndTime</p>
+                </div>
+            }
         </div>
     </div>
 </div>
