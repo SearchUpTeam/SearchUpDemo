@@ -15,7 +15,6 @@ namespace SearchUp.MVC.Controllers
         {
             _userManager = userManager;
         }
-        [Route("UserProfile")]
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);

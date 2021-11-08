@@ -10,6 +10,7 @@ namespace Application
         public static IServiceCollection AddServices(this IServiceCollection services)
         {
             services.AddScoped<IEventService, EventService>();
+            services.AddScoped<IChatService, ChatService>();
             return services;
         }
     }
