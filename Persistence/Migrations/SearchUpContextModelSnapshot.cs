@@ -61,6 +61,27 @@ namespace Persistence.Migrations
                     b.ToTable("Chats");
                 });
 
+            modelBuilder.Entity("Domain.ChatMembership", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ChatId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsKicked")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MemberType")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "ChatId");
+
+                    b.HasIndex("ChatId");
+
+                    b.ToTable("ChatMemberships");
+                });
+
             modelBuilder.Entity("Domain.Event", b =>
                 {
                     b.Property<int>("Id")
@@ -113,6 +134,27 @@ namespace Persistence.Migrations
                     b.ToTable("EventFiles");
                 });
 
+            modelBuilder.Entity("Domain.EventMembership", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EventId")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsKicked")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("MemberType")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "EventId");
+
+                    b.HasIndex("EventId");
+
+                    b.ToTable("EventMemberships");
+                });
+
             modelBuilder.Entity("Domain.Following", b =>
                 {
                     b.Property<int>("FollowerId")
@@ -142,26 +184,6 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("InterestTags");
-                });
-
-            modelBuilder.Entity("Domain.Member", b =>
-                {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ChatId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("MemberType")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasDefaultValue(0);
-
-                    b.HasKey("UserId", "ChatId");
-
-                    b.HasIndex("ChatId");
-
-                    b.ToTable("Members");
                 });
 
             modelBuilder.Entity("Domain.Message", b =>
@@ -303,21 +325,6 @@ namespace Persistence.Migrations
                     b.HasIndex("TopicsId");
 
                     b.ToTable("EventInterestTag");
-                });
-
-            modelBuilder.Entity("EventUser", b =>
-                {
-                    b.Property<int>("EventsId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ParticipantsId")
-                        .HasColumnType("int");
-
-                    b.HasKey("EventsId", "ParticipantsId");
-
-                    b.HasIndex("ParticipantsId");
-
-                    b.ToTable("EventUser");
                 });
 
             modelBuilder.Entity("InterestTagUser", b =>
@@ -476,6 +483,25 @@ namespace Persistence.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Domain.ChatMembership", b =>
+                {
+                    b.HasOne("Domain.Chat", "Chat")
+                        .WithMany("memberships")
+                        .HasForeignKey("ChatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.User", "User")
+                        .WithMany("ChatMemberships")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Chat");
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Domain.EventAttachedFile", b =>
                 {
                     b.HasOne("Domain.Event", "Event")
@@ -485,6 +511,25 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Event");
+                });
+
+            modelBuilder.Entity("Domain.EventMembership", b =>
+                {
+                    b.HasOne("Domain.Event", "Event")
+                        .WithMany("memberships")
+                        .HasForeignKey("EventId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.User", "User")
+                        .WithMany("EventMemberships")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Event");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Following", b =>
@@ -504,25 +549,6 @@ namespace Persistence.Migrations
                     b.Navigation("Followed");
 
                     b.Navigation("Follower");
-                });
-
-            modelBuilder.Entity("Domain.Member", b =>
-                {
-                    b.HasOne("Domain.Chat", "Chat")
-                        .WithMany("Members")
-                        .HasForeignKey("ChatId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.User", "User")
-                        .WithMany("Members")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Chat");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Domain.Message", b =>
@@ -566,21 +592,6 @@ namespace Persistence.Migrations
                     b.HasOne("Domain.InterestTag", null)
                         .WithMany()
                         .HasForeignKey("TopicsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("EventUser", b =>
-                {
-                    b.HasOne("Domain.Event", null)
-                        .WithMany()
-                        .HasForeignKey("EventsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Domain.User", null)
-                        .WithMany()
-                        .HasForeignKey("ParticipantsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -653,7 +664,7 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Chat", b =>
                 {
-                    b.Navigation("Members");
+                    b.Navigation("memberships");
 
                     b.Navigation("Messages");
                 });
@@ -661,6 +672,8 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Event", b =>
                 {
                     b.Navigation("AttachedFiles");
+
+                    b.Navigation("memberships");
                 });
 
             modelBuilder.Entity("Domain.Message", b =>
@@ -672,11 +685,13 @@ namespace Persistence.Migrations
                 {
                     b.Navigation("Avatars");
 
+                    b.Navigation("ChatMemberships");
+
+                    b.Navigation("EventMemberships");
+
                     b.Navigation("Followers");
 
                     b.Navigation("Follows");
-
-                    b.Navigation("Members");
 
                     b.Navigation("Messages");
                 });

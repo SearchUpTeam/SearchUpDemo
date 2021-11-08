@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistence.Migrations
 {
-    public partial class Initialmigration : Migration
+    public partial class initialmigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -11,7 +11,8 @@ namespace Persistence.Migrations
                 name: "AspNetRoles",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -25,7 +26,8 @@ namespace Persistence.Migrations
                 name: "AspNetUsers",
                 columns: table => new
                 {
-                    Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     BirthDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     About = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -53,7 +55,9 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1")
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ChatType = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -69,7 +73,8 @@ namespace Persistence.Migrations
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ChatId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -95,7 +100,7 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -116,7 +121,7 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
@@ -138,7 +143,7 @@ namespace Persistence.Migrations
                     LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -155,8 +160,8 @@ namespace Persistence.Migrations
                 name: "AspNetUserRoles",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -179,7 +184,7 @@ namespace Persistence.Migrations
                 name: "AspNetUserTokens",
                 columns: table => new
                 {
-                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    UserId = table.Column<int>(type: "int", nullable: false),
                     LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -201,7 +206,6 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false),
                     FileType = table.Column<int>(type: "int", nullable: false),
                     Path = table.Column<string>(type: "nvarchar(max)", nullable: false)
@@ -210,8 +214,8 @@ namespace Persistence.Migrations
                 {
                     table.PrimaryKey("PK_Avatars", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Avatars_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_Avatars_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -222,23 +226,47 @@ namespace Persistence.Migrations
                 columns: table => new
                 {
                     FollowerId = table.Column<int>(type: "int", nullable: false),
-                    FollowedId = table.Column<int>(type: "int", nullable: false),
-                    FollowerId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    FollowedId1 = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    FollowedId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Following", x => new { x.FollowerId, x.FollowedId });
                     table.ForeignKey(
-                        name: "FK_Following_AspNetUsers_FollowedId1",
-                        column: x => x.FollowedId1,
+                        name: "FK_Following_AspNetUsers_FollowedId",
+                        column: x => x.FollowedId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Following_AspNetUsers_FollowerId1",
-                        column: x => x.FollowerId1,
+                        name: "FK_Following_AspNetUsers_FollowerId",
+                        column: x => x.FollowerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ChatMemberships",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    ChatId = table.Column<int>(type: "int", nullable: false),
+                    MemberType = table.Column<int>(type: "int", nullable: false),
+                    IsKicked = table.Column<bool>(type: "bit", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ChatMemberships", x => new { x.UserId, x.ChatId });
+                    table.ForeignKey(
+                        name: "FK_ChatMemberships_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ChatMemberships_Chats_ChatId",
+                        column: x => x.ChatId,
+                        principalTable: "Chats",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -248,7 +276,7 @@ namespace Persistence.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    SenderId1 = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    Timestamp = table.Column<DateTime>(type: "datetime2", nullable: false),
                     SenderId = table.Column<int>(type: "int", nullable: false),
                     ChatId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -256,56 +284,15 @@ namespace Persistence.Migrations
                 {
                     table.PrimaryKey("PK_Messages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Messages_AspNetUsers_SenderId1",
-                        column: x => x.SenderId1,
+                        name: "FK_Messages_AspNetUsers_SenderId",
+                        column: x => x.SenderId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Messages_Chats_ChatId",
                         column: x => x.ChatId,
                         principalTable: "Chats",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserChats",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserChats", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_UserChats_Chats_Id",
-                        column: x => x.Id,
-                        principalTable: "Chats",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "EventChats",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false),
-                    EventId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_EventChats", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_EventChats_Chats_Id",
-                        column: x => x.Id,
-                        principalTable: "Chats",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_EventChats_Events_EventId",
-                        column: x => x.EventId,
-                        principalTable: "Events",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -332,24 +319,26 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "EventUser",
+                name: "EventMemberships",
                 columns: table => new
                 {
-                    EventsId = table.Column<int>(type: "int", nullable: false),
-                    ParticipantsId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    EventId = table.Column<int>(type: "int", nullable: false),
+                    MemberType = table.Column<int>(type: "int", nullable: false),
+                    IsKicked = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_EventUser", x => new { x.EventsId, x.ParticipantsId });
+                    table.PrimaryKey("PK_EventMemberships", x => new { x.UserId, x.EventId });
                     table.ForeignKey(
-                        name: "FK_EventUser_AspNetUsers_ParticipantsId",
-                        column: x => x.ParticipantsId,
+                        name: "FK_EventMemberships_AspNetUsers_UserId",
+                        column: x => x.UserId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_EventUser_Events_EventsId",
-                        column: x => x.EventsId,
+                        name: "FK_EventMemberships_Events_EventId",
+                        column: x => x.EventId,
                         principalTable: "Events",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -383,7 +372,7 @@ namespace Persistence.Migrations
                 name: "InterestTagUser",
                 columns: table => new
                 {
-                    InteresteddUsersId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    InteresteddUsersId = table.Column<int>(type: "int", nullable: false),
                     InterestsId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -420,30 +409,6 @@ namespace Persistence.Migrations
                         name: "FK_MessageFiles_Messages_MessageId",
                         column: x => x.MessageId,
                         principalTable: "Messages",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "UserUserChat",
-                columns: table => new
-                {
-                    ChatsId = table.Column<int>(type: "int", nullable: false),
-                    ParticipantsId = table.Column<string>(type: "nvarchar(450)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_UserUserChat", x => new { x.ChatsId, x.ParticipantsId });
-                    table.ForeignKey(
-                        name: "FK_UserUserChat_AspNetUsers_ParticipantsId",
-                        column: x => x.ParticipantsId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_UserUserChat_UserChats_ChatsId",
-                        column: x => x.ChatsId,
-                        principalTable: "UserChats",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -488,16 +453,14 @@ namespace Persistence.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Avatars_UserId1",
+                name: "IX_Avatars_UserId",
                 table: "Avatars",
-                column: "UserId1");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EventChats_EventId",
-                table: "EventChats",
-                column: "EventId",
-                unique: true,
-                filter: "[EventId] IS NOT NULL");
+                name: "IX_ChatMemberships_ChatId",
+                table: "ChatMemberships",
+                column: "ChatId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_EventFiles_EventId",
@@ -510,19 +473,14 @@ namespace Persistence.Migrations
                 column: "TopicsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_EventUser_ParticipantsId",
-                table: "EventUser",
-                column: "ParticipantsId");
+                name: "IX_EventMemberships_EventId",
+                table: "EventMemberships",
+                column: "EventId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Following_FollowedId1",
+                name: "IX_Following_FollowedId",
                 table: "Following",
-                column: "FollowedId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Following_FollowerId1",
-                table: "Following",
-                column: "FollowerId1");
+                column: "FollowedId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_InterestTagUser_InterestsId",
@@ -540,14 +498,9 @@ namespace Persistence.Migrations
                 column: "ChatId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Messages_SenderId1",
+                name: "IX_Messages_SenderId",
                 table: "Messages",
-                column: "SenderId1");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UserUserChat_ParticipantsId",
-                table: "UserUserChat",
-                column: "ParticipantsId");
+                column: "SenderId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -571,7 +524,7 @@ namespace Persistence.Migrations
                 name: "Avatars");
 
             migrationBuilder.DropTable(
-                name: "EventChats");
+                name: "ChatMemberships");
 
             migrationBuilder.DropTable(
                 name: "EventFiles");
@@ -580,7 +533,7 @@ namespace Persistence.Migrations
                 name: "EventInterestTag");
 
             migrationBuilder.DropTable(
-                name: "EventUser");
+                name: "EventMemberships");
 
             migrationBuilder.DropTable(
                 name: "Following");
@@ -590,9 +543,6 @@ namespace Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "MessageFiles");
-
-            migrationBuilder.DropTable(
-                name: "UserUserChat");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
@@ -605,9 +555,6 @@ namespace Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Messages");
-
-            migrationBuilder.DropTable(
-                name: "UserChats");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
