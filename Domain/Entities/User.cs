@@ -12,9 +12,8 @@ namespace Domain
         public ICollection<InterestTag> Interests { get; set; }
         public ICollection<Following> Follows { get; set; }
         public ICollection<Following> Followers { get; set; }
-        public ICollection<Event> Events { get; set; }
         public ICollection<Message> Messages { get; set; }
-        public ICollection<Chat> Chats { get; set; }
-        public ICollection<Member> Members { get; set; }
+        public ICollection<ChatMembership> ChatMemberships { get; set; }
+        public ICollection<EventMembership> EventMemberships { get; set; }
     }
 }

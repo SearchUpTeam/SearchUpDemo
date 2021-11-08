@@ -22,15 +22,15 @@ namespace Application.Services
             if (chat.ChatType == ChatType.Default)
                 memberType = MemberType.Participant;
             else memberType = MemberType.Organizer;
-            var member = new Member()
+            var membership = new ChatMembership()
             {
                 UserId = userId,
                 MemberType = memberType
             };
             await _context.Chats.AddAsync(chat);
             await _context.SaveChangesAsync();
-            member.ChatId = chat.Id;
-            await _context.Members.AddAsync(member);
+            membership.ChatId = chat.Id;
+            await _context.ChatMemberships.AddAsync(membership);
             await _context.SaveChangesAsync();
         }
         public async Task CreateMessage(Message message)
@@ -50,21 +50,24 @@ namespace Application.Services
         }
         public async Task<IEnumerable<Chat>> GetChatsAsync(int userId)
         {
-            var chats =  await _context.User
-                .Where(u => u.Id == userId)
-                .Select(c => c.Chats)
-                .FirstOrDefaultAsync();
-            return chats;
+            var chatsId = _context.ChatMemberships
+                .Where(m => m.UserId == userId)
+                .Select(m => m.ChatId);
+
+            return await _context.Chats
+                .Where( c => chatsId.Contains(c.Id))
+                .ToListAsync();
+
         }
         public async Task JoinChat(int chatId, int userId)
         {
-            var member = new Member()
+            var membership = new ChatMembership()
             {
                 ChatId = chatId,
                 UserId = userId,
                 MemberType = MemberType.Participant
             };
-            await _context.Members.AddAsync(member);
+            await _context.ChatMemberships.AddAsync(membership);
             await _context.SaveChangesAsync();
         }
         public async Task Update(Chat chat)
