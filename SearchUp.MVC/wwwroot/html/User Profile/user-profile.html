@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+    <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/user-profile.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,800;0,900;1,100;1,200;1,800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-inner horizontal-flex-container">
+                <a class="logo" asp-controller="Home" asp-action="Index">SearchUp</a>
+                <nav class="nav">
+                        <a class="footer-nav-link" asp-controller="Account" asp-action="Login">Log In</a>
+                        <a class="footer-nav-link" asp-controller="Account" asp-action="Register">Sign Up</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="content">
+        <div class="container">
+            <div class="content-inner">  
+                
+                <div class="nav-menu-wrap">
+                    <nav class="nav-menu">
+                        <a class="nav-link" href="#">My profile</a>
+                        <a class="nav-link" href="#">Friends</a>
+                        <a class="nav-link" href="#">Events</a>
+                        <a class="nav-link" href="#">Chats</a>
+                    </nav>
+                </div>
+
+                <div class="content">
+                    <div class="user-profile">
+                        <div class="user-info">
+                            <div class="user-avatar-and-stats">
+                                <div class="user-avatar-wrap"><img class="user-avatar" id="user-avatar-main" src="https://pyxis.nymag.com/v1/imgs/e9d/1f3/b597372347a09beca86aaf1b6253bf70fd-rick-and-morty.rsquare.w1200.jpg" alt=""></div>
+                                <div class="user-stats-wrap">
+                                    <ul class="user-stats">
+                                        <li>10 followers</li>
+                                        <li>10 follows</li>
+                                        <li>10 events</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="user-name-and-info">
+                                <p class="user-name" id="user-name-main">Rick Sanchez</p>
+                                <div class="user-description">
+                                    <p id="user-age">49 y.o</p>
+                                    <p id="user-description">Listen, Morty, I hate to break it to you, but what people call love is just a chemical reaction that compels animals to breed. It hits hard, Morty, then it slowly fades, leaving you stranded in a failing marriage. I did it. Your parents are gonna do it. Break the cycle, Morty. Rise above. Focus on science.</p>
+                                </div>
+                                <div class="user-interests"></div>
+                            </div>
+                        </div>
+                        <div class="users-profile-events"></div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-inner horizontal-flex-container">
+                <nav class="nav">
+                    <a class="nav-link" href="#">About us</a>
+                    <a class="nav-link" href="#">About project</a>
+                </nav>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
