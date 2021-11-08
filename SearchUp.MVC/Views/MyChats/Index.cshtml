@@ -1,0 +1,36 @@
+﻿@{
+    Layout = "~/Views/Shared/Chat_Layout.cshtml";
+    ViewBag.Title = "MyChats";
+}
+
+@using Domain;
+@model IEnumerable<Chat>
+
+<div class="chats">
+    @{
+        if (Model != null)
+        {
+            foreach (var chat in Model)
+            {
+                <div class="chat_item">
+                    <div class="chat-picture"><img src="" alt="chat-icon"></div>
+                    <div class="chat-name">@chat.Name</div>
+                </div>
+            }
+        }
+    }
+    <button class="create-button" onclick="openForm()">+</button>
+    <div class="form-popup" id="myForm">
+        <form method="post" class="form-container" asp-controller="MyChats" asp-action="Index">
+            <p>Creating chat</p>
+            <input type="text" placeholder="Chat name" name="name">
+            <button type="submit" class="btn">Create chat</button>
+        </form>
+    </div>
+</div>
+<div class="chat-window">
+    <div class="messages">
+
+    </div>
+</div>
+

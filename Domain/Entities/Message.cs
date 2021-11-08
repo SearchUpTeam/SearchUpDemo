@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Domain
@@ -8,6 +9,7 @@ namespace Domain
         public int Id { get; set; }
         [Required]
         public string Text { get; set; }
+        public DateTime Timestamp { get; set; }
         public User Sender { get; set; }
         public int SenderId { get; set; }
         public ICollection<MessageAttachedFile> AttachedFiles { get; set; }

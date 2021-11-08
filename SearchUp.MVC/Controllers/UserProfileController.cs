@@ -21,7 +21,6 @@ namespace SearchUp.MVC.Controllers
             _userManager = userManager;
             _eventService = eventService;
         }
-        [HttpGet]
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
