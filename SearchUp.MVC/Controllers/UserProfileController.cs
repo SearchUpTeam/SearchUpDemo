@@ -24,7 +24,7 @@ namespace SearchUp.MVC.Controllers
         public async Task<IActionResult> Index()
         {
             var user = await _userManager.GetUserAsync(User);
-            var profile = new UserProfileViewModel() { Username = user.UserName, About = user.About, Avatars = user.Avatars, Events = _eventService.GetVisitedByUser(user.Id)};
+            var profile = new UserProfileViewModel() { Username = user.UserName, About = user.About, Avatars = user.Avatars, Events = await _eventService.GetVisitedByUserAsync(user.Id)};
             return View(profile);
         }
     }

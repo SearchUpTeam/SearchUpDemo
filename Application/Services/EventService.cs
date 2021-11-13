@@ -18,33 +18,33 @@ namespace Application.Services
         {
             _context = context;
         }
-        public IEnumerable<Event> GetVisitedByUser(int userId)
+        public async Task<IEnumerable<Event>> GetVisitedByUserAsync(int userId)
         {
-            var eventsId = _context.EventMemberships
+            var eventsId = await _context.EventMemberships
                 .Where(m => m.UserId == userId)
-                .Select(m => m.EventId);
+                .Select(m => m.EventId).ToArrayAsync();
 
-            return _context.Events.Where(e => eventsId.Contains(e.Id));
+            return await _context.Events.Where(e => eventsId.Contains(e.Id)).ToListAsync();
         }
-        public IEnumerable<Event> GetOrganizedByUser(int userId)
+        public async Task<IEnumerable<Event>> GetOrganizedByUserAsync(int userId)
         {
-            var eventsId = _context.EventMemberships
+            var eventsId = await _context.EventMemberships
                 .Where(m => m.UserId == userId && m.MemberType == MemberType.Organizer)
-                .Select(m => m.EventId);
+                .Select(m => m.EventId).ToArrayAsync();
 
-            return _context.Events.Where(e => eventsId.Contains(e.Id));
+            return await _context.Events.Where(e => eventsId.Contains(e.Id)).ToListAsync();
         }
-        public IEnumerable<Event> GetVisitedByUserAsParticipant(int userId)
+        public async Task<IEnumerable<Event>> GetVisitedByUserAsParticipantAsync(int userId)
         {
-            var eventsId = _context.EventMemberships
+            var eventsId = await _context.EventMemberships
                 .Where(m => m.UserId == userId && m.MemberType == MemberType.Participant)
-                .Select(m => m.EventId);
+                .Select(m => m.EventId).ToArrayAsync();
 
-            return _context.Events.Where(e => eventsId.Contains(e.Id));
+            return await _context.Events.Where(e => eventsId.Contains(e.Id)).ToListAsync();
         }
-        public IEnumerable<Event> GetBySearchRequest(string searchRequest)
+        public async Task<IEnumerable<Event>> GetBySearchRequestAsync(string searchRequest)
         {
-            return _context.Events.Where(e => e.Title.Contains(searchRequest));
+            return await _context.Events.Where(e => e.Title.Contains(searchRequest)).ToListAsync();
         }
         public async Task SubscribeAsync(int eventId, int userId)
         {
