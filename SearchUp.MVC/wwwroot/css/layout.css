@@ -92,5 +92,44 @@ a{
 }
 
 .interest-tag{
-    
+    width: fit-content;
+    white-space: nowrap;
+    background-color: #c1c1c1;
+    font-size: 20px;
+    border-radius: 18px;
+    padding: 5px 7px;
+    margin: 5px;
+    align-self: center;
 }
+
+/* EVENT ITEM */
+.event-item{
+    background-color: #e2e2e2;
+    border-radius: 15px;
+    margin: 25px 0;
+}
+.event-item-wrap{
+    padding: 15px;
+    display: flex;
+}
+.event-item-left{
+    text-align: left;
+    font-size: 21px;
+    flex: 3;
+}
+
+.event-item-tags{
+    flex: 2;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.event-item-times{
+    flex: 2;
+    font-size: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
