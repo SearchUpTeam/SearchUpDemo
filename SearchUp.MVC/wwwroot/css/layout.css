@@ -21,6 +21,10 @@ body{
     padding: 20px 0;
 }
 
+.header-inner{
+    border-bottom: 1px solid black;
+}
+
 a{
     color: black;
     text-decoration: none;
@@ -46,14 +50,27 @@ a{
 }
 
 .logo{
-    font-size: 30px;
-    font-weight: 700;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 59px;
+}
+
+.footer-nav-link{
+    font-size: 25px;
+}
+
+.nav-menu{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    border-bottom: 1px solid black;
 }
 
 .nav-link{
-    font-size: bold;
-    font-size: 18px;
-    padding: 20px;
+    margin: 10px 15px;
+    font-weight: 300;
+    font-size: 36px;
+    line-height: 44px;
 }
 
 /*content*/
@@ -67,4 +84,13 @@ a{
 .footer-inner{
     height: 70px;
     justify-content: center;
+}
+
+.sidebar{
+    display: flex;
+    flex-direction: column;
+}
+
+.interest-tag{
+    
 }
