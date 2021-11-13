@@ -85,3 +85,12 @@ a{
     height: 70px;
     justify-content: center;
 }
+
+.sidebar{
+    display: flex;
+    flex-direction: column;
+}
+
+.interest-tag{
+    
+}
