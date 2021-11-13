@@ -13,8 +13,10 @@
             foreach (var chat in Model)
             {
                 <div class="chat_item">
-                    <div class="chat-picture"><img src="" alt="chat-icon"></div>
-                    <div class="chat-name">@chat.Name</div>
+                    <a asp-controller="MyChats" asp-action="Chat" asp-route-id="@chat.Id">
+                        <div class="chat-picture"><img src="" alt="chat-icon"></div>
+                        <div class="chat-name">@chat.Name</div>
+                    </a>
                 </div>
             }
         }

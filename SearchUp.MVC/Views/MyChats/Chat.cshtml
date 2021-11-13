@@ -1,5 +1,123 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    Layout = "~/Views/Shared/Chat_Layout.cshtml";
+    ViewBag.Title = $"{Model.CurrentChat.Name}";
 }
+
+@using Application.ViewModels;
+@model ChatsViewModel
+
+<div class="chats">
+    @{
+        if (Model.Chats != null)
+        {
+            foreach (var chat in Model.Chats)
+            {
+                <div class="chat_item">
+                    <a asp-controller="MyChats" asp-action="Chat" asp-route-id="@chat.Id">
+                        <div class="chat-picture"><img src="" alt="chat-icon"></div>
+                        <div class="chat-name">@chat.Name</div>
+                    </a>
+                </div>
+            }
+        }
+    }
+    <button class="create-button" onclick="openForm()">+</button>
+    <div class="form-popup" id="myForm">
+        <form method="post" class="form-container" asp-controller="MyChats" asp-action="Index">
+            <p>Creating chat</p>
+            <input type="text" placeholder="Chat name" name="name">
+            <button type="submit" class="btn">Create chat</button>
+        </form>
+    </div>
+</div>
+<div class="chat-window">
+    <div class="messages">
+        @{
+            if (Model.CurrentChat != null && Model.CurrentChat.Messages != null)
+            {
+                foreach (var message in Model.CurrentChat.Messages)
+                {
+                    <div class="message_item">
+                        <div class="user-picture"><img src="" alt="user-picture"></div>
+                        <div class="sender">@message.Sender.UserName</div>
+                        <div class="message-text">@message.Text</div>
+                        <div class="messageSent">@message.Timestamp</div>
+                    </div>
+                }
+            }
+        }
+    </div>
+    <div class="message-input">
+        <form class="message-input-form" asp-controller="MyChats" asp-action="CreateMessage">
+            <input type="hidden" name="chatId" value="@Model.CurrentChat.Id">
+            <input type="text" placeholder="Write a message..." name="message" id="message-input">
+            <input type="submit" value="Send message">
+        </form>
+    </div>
+</div>
+
+
+<script src="~/js/signalr.min.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+    var connection = new signalR.HubConnectionBuilder()
+        .withUrl("/Chatter")
+        .build();
+
+    var _connectionId = '';
+
+    connection.on("RecieveMessage", function (data) {
+        var message = document.createElement("div");
+        message.classList.add("message_item");
+        var sender = document.createElement("div");
+        userPicture.classList.add("sender");
+        userPicture.appendChild(document.createTextNode(data.name))
+        var messageText = document.createElement("div");
+        userPicture.classList.add("message-text");
+        userPicture.appendChild(document.createTextNode(data.text))
+        var messageSent = document.createElement("div");
+        userPicture.classList.add("messageSent");
+        userPicture.appendChild(document.createTextNode(data.timestamp))
+        message.appendChild(sender);
+        message.appendChild(messageText);
+        message.appendChild(messageSent);
+        document.querySelector('.messages').append(message);
+    })
+
+    var joinChat = function () {
+        var url = 'MyChats/JoinChat/' + _connectionId + '/@Model.CurrentChat.Name';
+        axios.post(url, null)
+            .then(res => {
+                console.log("Chat Joined!", res);
+            })
+            .catch(err => {
+                console.err("Failed to join Chat",err);
+            })
+    }
+
+    connection.start()
+        .then(function () {
+            connection.invoke('getConnectionId')
+                .then(function (connectionId) {
+                    _connectionId = connectionId
+                    joinChat();
+                })
+        })
+        .catch(function (err) {
+            console.log(err)
+        })
+
+    var sendMessage = function (event) {
+        event.preventDefault();
+
+        var data = new FormData(event.target);
+        document.getElementById('message-input').value = '';
+        axios.post('/MyChats/Chat/SendMessage', data)
+            .then(res => {
+                console.log("Message Sent!")
+            })
+            .catch(err => {
+                console.log("Failed to send message!")
+            })
+    }
+</script>

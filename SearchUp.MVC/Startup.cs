@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Persistence;
+using SearchUp.MVC.Hubs;
 
 namespace SearchUp.MVC
 {
@@ -35,6 +36,7 @@ namespace SearchUp.MVC
             })
                 .AddEntityFrameworkStores<SearchUpContext>();
             services.AddServices();
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -63,6 +65,7 @@ namespace SearchUp.MVC
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHub<ChatHub>("/Chatter");
             });
         }
     }

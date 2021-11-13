@@ -1,4 +1,5 @@
 ﻿using Application.Interfaces;
+using Application.ViewModels;
 using Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -15,10 +16,15 @@ namespace SearchUp.MVC.Controllers
     {
         private readonly IChatService _chatService;
         private readonly UserManager<User> _userManager;
-        public MyChatsController(IChatService chatService, UserManager<User> userManager)
+        private readonly IHubContext<ChatHub> _chat;
+        public MyChatsController(
+            IChatService chatService,
+            UserManager<User> userManager,
+            IHubContext<ChatHub> chat)
         {
             _chatService = chatService;
             _userManager = userManager;
+            _chat = chat;
         }
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -40,14 +46,36 @@ namespace SearchUp.MVC.Controllers
         public async Task<IActionResult> Chat(int id)
         {
             var chat = await _chatService.GetChatByIdAsync(id);
-            return View(chat);
+            var user = await _userManager.GetUserAsync(User);
+            var chatsViewModel = new ChatsViewModel()
+            {
+                Chats = await _chatService.GetChatsAsync(user.Id),
+                CurrentChat = chat
+            };
+            return View(chatsViewModel);
         }
         [HttpGet]
-        public async Task<IActionResult> JoinRoom(int id)
+        public async Task<IActionResult> JoinChat(int chatId)
         {
             var user = await _userManager.GetUserAsync(User);
-            await _chatService.JoinChat(id, user.Id);
-            return RedirectToAction("Chat", "MyChats", new { id = id });
+            await _chatService.JoinChat(chatId, user.Id);
+            return RedirectToAction("Chat", "MyChats", new { id = chatId });
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateMessage(
+            int chatId,
+            string message)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var Message = new Message()
+            {
+                ChatId = chatId,
+                Text = message,
+                Timestamp = DateTime.UtcNow,
+                SenderId = user.Id
+            };
+            await _chatService.CreateMessage(Message);
+            return RedirectToAction("Chat", new { id = chatId });
         }
         public async Task<IActionResult> SendMessage(
             int chatId,
