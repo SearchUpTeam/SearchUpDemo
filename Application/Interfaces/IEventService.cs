@@ -6,10 +6,10 @@ namespace Application.Interfaces
 {
     public interface IEventService
     {
-        IEnumerable<Event> GetVisitedByUser(int userId);
-        IEnumerable<Event> GetOrganizedByUser(int userId);
-        IEnumerable<Event> GetVisitedByUserAsParticipant(int userId);
-        IEnumerable<Event> GetBySearchRequest(string searchRequest);
+        Task<IEnumerable<Event>> GetVisitedByUserAsync(int userId);
+        Task<IEnumerable<Event>> GetOrganizedByUserAsync(int userId);
+        Task<IEnumerable<Event>> GetVisitedByUserAsParticipantAsync(int userId);
+        Task<IEnumerable<Event>> GetBySearchRequestAsync(string searchRequest);
         Task SubscribeAsync(int eventId, int userId);
         Task UnsubscribeAsync(int eventId, int userId);
         Task KickMemberAsync(int eventId, int userId);
