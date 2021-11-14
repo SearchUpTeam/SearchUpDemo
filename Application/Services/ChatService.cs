@@ -49,6 +49,7 @@ namespace Application.Services
         {
             var chat = await _context.Chats.Where(c => c.Id == id)
                 .Include(c => c.Messages)
+                .ThenInclude(m=>m.Sender)
                 .FirstOrDefaultAsync();
             return chat;
         }
@@ -62,6 +63,11 @@ namespace Application.Services
                 .Where( c => chatsId.Contains(c.Id))
                 .ToListAsync();
 
+        }
+        public async Task<bool> IsUserInChat(int userId, int chatId)
+        {
+            return await _context.ChatMemberships
+                .AnyAsync(m => m.UserId == userId && m.ChatId == chatId);
         }
         public async Task JoinChat(
             int chatId,

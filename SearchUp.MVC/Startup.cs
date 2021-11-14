@@ -65,7 +65,7 @@ namespace SearchUp.MVC
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapHub<ChatHub>("/Chatter");
+                endpoints.MapHub<ChatHub>("/chatHub");
             });
         }
     }

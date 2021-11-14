@@ -4,9 +4,6 @@ using Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
-using SearchUp.MVC.Hubs;
-using System;
 using System.Threading.Tasks;
 
 namespace SearchUp.MVC.Controllers
@@ -16,15 +13,12 @@ namespace SearchUp.MVC.Controllers
     {
         private readonly IChatService _chatService;
         private readonly UserManager<User> _userManager;
-        private readonly IHubContext<ChatHub> _chat;
         public MyChatsController(
             IChatService chatService,
-            UserManager<User> userManager,
-            IHubContext<ChatHub> chat)
+            UserManager<User> userManager)
         {
             _chatService = chatService;
             _userManager = userManager;
-            _chat = chat;
         }
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -34,19 +28,21 @@ namespace SearchUp.MVC.Controllers
             return View(chats);
         }
         [HttpPost]
-        public async Task<IActionResult> Index(string name)
+        public async Task<IActionResult> CreateChat(string name)
         {
             var chat = new Chat() { Name = name, ChatType = Domain.Enums.ChatType.Group };
             var user = await _userManager.GetUserAsync(User);
             await _chatService.CreateAsync(chat, user.Id);
             var chats = await _chatService.GetChatsAsync(user.Id);
-            return RedirectToAction("Index", "MyChats", chats, name);
+            return RedirectToAction("Chat", "MyChats", new { id = chat.Id });
         }
         [HttpGet]
         public async Task<IActionResult> Chat(int id)
         {
             var chat = await _chatService.GetChatByIdAsync(id);
             var user = await _userManager.GetUserAsync(User);
+            if (!await _chatService.IsUserInChat(user.Id, chat.Id))
+                return RedirectToAction("Index", "MyChats");
             var chatsViewModel = new ChatsViewModel()
             {
                 Chats = await _chatService.GetChatsAsync(user.Id),
@@ -54,45 +50,17 @@ namespace SearchUp.MVC.Controllers
             };
             return View(chatsViewModel);
         }
-        [HttpGet]
-        public async Task<IActionResult> JoinChat(int chatId)
+        public async Task<IActionResult> JoinChat(int id)
         {
             var user = await _userManager.GetUserAsync(User);
-            await _chatService.JoinChat(chatId, user.Id);
-            return RedirectToAction("Chat", "MyChats", new { id = chatId });
+            await _chatService.JoinChat(id, user.Id);
+            return RedirectToAction("Chat", "MyChats", new { id = id });
         }
-        [HttpPost]
-        public async Task<IActionResult> CreateMessage(
-            int chatId,
-            string message)
+        public async Task<IActionResult> LeaveChat(int id)
         {
             var user = await _userManager.GetUserAsync(User);
-            var Message = new Message()
-            {
-                ChatId = chatId,
-                Text = message,
-                Timestamp = DateTime.UtcNow,
-                SenderId = user.Id
-            };
-            await _chatService.CreateMessage(Message);
-            return RedirectToAction("Chat", new { id = chatId });
-        }
-        public async Task<IActionResult> SendMessage(
-            int chatId,
-            string text,
-            [FromServices] IHubContext<ChatHub> chat)
-        {
-            var user = await _userManager.GetUserAsync(User);
-            var message = new Message() { ChatId = chatId, Text = text, SenderId = user.Id, Timestamp=DateTime.UtcNow };
-            await _chatService.CreateMessage(message);
-            await chat.Clients.Group(chatId.ToString())
-                .SendAsync("RecieveMessage", new
-                {
-                    Text = message.Text,
-                    Name = user.UserName,
-                    Timestamp = message.Timestamp
-                });
-            return Ok();
+            await _chatService.LeaveChat(id, user.Id);
+            return RedirectToAction("Index", "MyChats");
         }
     }
 }

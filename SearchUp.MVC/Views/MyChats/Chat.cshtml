@@ -12,18 +12,17 @@
         {
             foreach (var chat in Model.Chats)
             {
-                <div class="chat_item">
-                    <a asp-controller="MyChats" asp-action="Chat" asp-route-id="@chat.Id">
-                        <div class="chat-picture"><img src="" alt="chat-icon"></div>
+                <a asp-controller="MyChats" asp-action="Chat" asp-route-id="@chat.Id">
+                    <div class="chat_item">
                         <div class="chat-name">@chat.Name</div>
-                    </a>
-                </div>
+                    </div>
+                </a>
             }
         }
     }
     <button class="create-button" onclick="openForm()">+</button>
     <div class="form-popup" id="myForm">
-        <form method="post" class="form-container" asp-controller="MyChats" asp-action="Index">
+        <form method="post" class="form-container" asp-controller="MyChats" asp-action="CreateChat">
             <p>Creating chat</p>
             <input type="text" placeholder="Chat name" name="name">
             <button type="submit" class="btn">Create chat</button>
@@ -31,93 +30,99 @@
     </div>
 </div>
 <div class="chat-window">
+    <a class="leave" asp-controller="MyChats" asp-action="LeaveChat" asp-route-id="@Model.CurrentChat.Id">leave chat</a>
     <div class="messages">
         @{
             if (Model.CurrentChat != null && Model.CurrentChat.Messages != null)
             {
                 foreach (var message in Model.CurrentChat.Messages)
                 {
-                    <div class="message_item">
-                        <div class="user-picture"><img src="" alt="user-picture"></div>
+                <div class="message_item">
+                    <img src="/images/user.png" alt="user-picture" class="user-picture">
+                    <div class="message_content">
                         <div class="sender">@message.Sender.UserName</div>
-                        <div class="message-text">@message.Text</div>
-                        <div class="messageSent">@message.Timestamp</div>
+                        <div class="text">@message.Text</div>
+                        <div class="timestamp">@message.Timestamp</div>
                     </div>
+                </div>
                 }
             }
         }
     </div>
     <div class="message-input">
-        <form class="message-input-form" asp-controller="MyChats" asp-action="CreateMessage">
+        <form class="message-input-form" onsubmit="sendMessage(event)">
             <input type="hidden" name="chatId" value="@Model.CurrentChat.Id">
-            <input type="text" placeholder="Write a message..." name="message" id="message-input">
+            <input type="text" placeholder="Write a message..." name="text" id="message-input">
             <input type="submit" value="Send message">
         </form>
     </div>
 </div>
 
 
-<script src="~/js/signalr.min.js"></script>
-<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-<script>
-    var connection = new signalR.HubConnectionBuilder()
-        .withUrl("/Chatter")
-        .build();
+    <script src="/js/signalr/dist/browser/signalr.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chatHub")
+            .build();
 
-    var _connectionId = '';
+        connection.on("ReceiveMessage", function (data) {
+            console.log(data);
+            var message = document.createElement("div");
+            message.classList.add("message_item");
+            var messageContent = document.createElement("div");
+            messageContent.classList.add("message_content");
+            var sender = document.createElement("div");
+            sender.classList.add("sender");
+            sender.appendChild(document.createTextNode(data.sender))
+            var text = document.createElement("div");
+            text.classList.add("text");
+            text.appendChild(document.createTextNode(data.text));
+            var timestamp = document.createElement("div");
+            timestamp.classList.add("timestamp");
+            timestamp.appendChild(document.createTextNode(data.timestamp));
+            var picture = document.createElement("img");
+            picture.classList.add("user-picture");
+            picture.setAttribute('src','/images/user.png')
+            messageContent.appendChild(sender);
+            messageContent.appendChild(text);
+            messageContent.appendChild(timestamp);
+            message.appendChild(picture);
+            message.appendChild(messageContent);
+            document.querySelector('.messages').append(message);
+            var block = document.querySelector(".messages");
+            block.scrollTop = block.scrollHeight;
+        })
 
-    connection.on("RecieveMessage", function (data) {
-        var message = document.createElement("div");
-        message.classList.add("message_item");
-        var sender = document.createElement("div");
-        userPicture.classList.add("sender");
-        userPicture.appendChild(document.createTextNode(data.name))
-        var messageText = document.createElement("div");
-        userPicture.classList.add("message-text");
-        userPicture.appendChild(document.createTextNode(data.text))
-        var messageSent = document.createElement("div");
-        userPicture.classList.add("messageSent");
-        userPicture.appendChild(document.createTextNode(data.timestamp))
-        message.appendChild(sender);
-        message.appendChild(messageText);
-        message.appendChild(messageSent);
-        document.querySelector('.messages').append(message);
-    })
-
-    var joinChat = function () {
-        var url = 'MyChats/JoinChat/' + _connectionId + '/@Model.CurrentChat.Name';
-        axios.post(url, null)
-            .then(res => {
-                console.log("Chat Joined!", res);
-            })
-            .catch(err => {
-                console.err("Failed to join Chat",err);
-            })
-    }
-
-    connection.start()
-        .then(function () {
-            connection.invoke('getConnectionId')
-                .then(function (connectionId) {
-                    _connectionId = connectionId
-                    joinChat();
+        var joinRoom = function () {
+            connection.invoke('joinRoom','@Model.CurrentChat.Id')
+                .then(res => {
+                    console.log("Room Joined!", res);
                 })
-        })
-        .catch(function (err) {
-            console.log(err)
-        })
+                .catch(err => {
+                    console.error("Failed to join Room",err);
+                })
+        }
 
-    var sendMessage = function (event) {
-        event.preventDefault();
+        connection.start()
+            .then(function () {
+                joinRoom();
+            })
+            .catch(function (err) {
+                console.log(err)
+            })
 
-        var data = new FormData(event.target);
-        document.getElementById('message-input').value = '';
-        axios.post('/MyChats/Chat/SendMessage', data)
-            .then(res => {
-                console.log("Message Sent!")
-            })
-            .catch(err => {
-                console.log("Failed to send message!")
-            })
-    }
-</script>
+        var sendMessage = function (event) {
+            event.preventDefault();
+
+            var data = new FormData(event.target);
+            document.getElementById('message-input').value = '';
+            connection.invoke('sendMessage', parseInt(@Model.CurrentChat.Id),'@User.Identity.Name', data.get('text'))
+                .then(res => {
+                    console.log("Message Sent!")
+                })
+                .catch(err => {
+                    console.log("Failed to send message!")
+                })
+        }
+    </script>
