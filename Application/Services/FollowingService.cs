@@ -22,12 +22,12 @@ namespace Application.Services
 
         public async Task<int> CountFollowingsAsync(int userId)
         {
-            return await _context.Followings.CountAsync(f => f.FollowedId == userId);
+            return await _context.Following.CountAsync(f => f.FollowedId == userId);
         }
 
         public async Task<int> CountFollowersAsync(int userId)
         {
-            return await _context.Followings.CountAsync(f => f.FollowerId == userId);
+            return await _context.Following.CountAsync(f => f.FollowerId == userId);
         }
 
         public async Task<IEnumerable<User>> GetFollowersAsync(int userId)

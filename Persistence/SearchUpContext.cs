@@ -9,7 +9,7 @@ namespace Persistence
     public class SearchUpContext : IdentityDbContext<User,IdentityRole<int>,int>
     {
         public DbSet<User> User { get; set; }
-        public DbSet<Following> Followings {get; set;}
+        public DbSet<Following> Following {get; set;}
         public DbSet<InterestTag> InterestTags { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Message> Messages { get; set; }

@@ -37,17 +37,17 @@ namespace Application.Services
             throw new System.NotImplementedException();
         }
 
-        public async Task<IEnumerable<InterestTag>> GetEventInterestsAsync(int userId)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public async Task<IEnumerable<InterestTag>> GetUserInterestsAsync(int userId)
         {
-            var user = await _context.User.FindAsync(userId);
+            var user = await _context.User.Include(u => u.Interests).SingleAsync(u => u.Id == userId);
             return user.Interests;
         }
 
+        public async Task<IEnumerable<InterestTag>> GetEventInterestsAsync(int eventId)
+        {
+            throw new System.NotImplementedException();
+        }
+        
         public async Task RemoveInterestsFromEventAsync(int userId, params int[] interestsId)
         {
             throw new System.NotImplementedException();
