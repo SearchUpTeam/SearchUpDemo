@@ -1,5 +1,128 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
+    Layout = "~/Views/Shared/Chat_Layout.cshtml";
+    ViewBag.Title = $"{Model.CurrentChat.Name}";
 }
+
+@using Application.ViewModels;
+@model ChatsViewModel
+
+<div class="chats">
+    @{
+        if (Model.Chats != null)
+        {
+            foreach (var chat in Model.Chats)
+            {
+                <a asp-controller="MyChats" asp-action="Chat" asp-route-id="@chat.Id">
+                    <div class="chat_item">
+                        <div class="chat-name">@chat.Name</div>
+                    </div>
+                </a>
+            }
+        }
+    }
+    <button class="create-button" onclick="openForm()">+</button>
+    <div class="form-popup" id="myForm">
+        <form method="post" class="form-container" asp-controller="MyChats" asp-action="CreateChat">
+            <p>Creating chat</p>
+            <input type="text" placeholder="Chat name" name="name">
+            <button type="submit" class="btn">Create chat</button>
+        </form>
+    </div>
+</div>
+<div class="chat-window">
+    <a class="leave" asp-controller="MyChats" asp-action="LeaveChat" asp-route-id="@Model.CurrentChat.Id">leave chat</a>
+    <div class="messages">
+        @{
+            if (Model.CurrentChat != null && Model.CurrentChat.Messages != null)
+            {
+                foreach (var message in Model.CurrentChat.Messages)
+                {
+                <div class="message_item">
+                    <img src="/images/user.png" alt="user-picture" class="user-picture">
+                    <div class="message_content">
+                        <div class="sender">@message.Sender.UserName</div>
+                        <div class="text">@message.Text</div>
+                        <div class="timestamp">@message.Timestamp</div>
+                    </div>
+                </div>
+                }
+            }
+        }
+    </div>
+    <div class="message-input">
+        <form class="message-input-form" onsubmit="sendMessage(event)">
+            <input type="hidden" name="chatId" value="@Model.CurrentChat.Id">
+            <input type="text" placeholder="Write a message..." name="text" id="message-input">
+            <input type="submit" value="Send message">
+        </form>
+    </div>
+</div>
+
+
+    <script src="/js/signalr/dist/browser/signalr.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script>
+        const connection = new signalR.HubConnectionBuilder()
+            .withUrl("/chatHub")
+            .build();
+
+        connection.on("ReceiveMessage", function (data) {
+            console.log(data);
+            var message = document.createElement("div");
+            message.classList.add("message_item");
+            var messageContent = document.createElement("div");
+            messageContent.classList.add("message_content");
+            var sender = document.createElement("div");
+            sender.classList.add("sender");
+            sender.appendChild(document.createTextNode(data.sender))
+            var text = document.createElement("div");
+            text.classList.add("text");
+            text.appendChild(document.createTextNode(data.text));
+            var timestamp = document.createElement("div");
+            timestamp.classList.add("timestamp");
+            timestamp.appendChild(document.createTextNode(data.timestamp));
+            var picture = document.createElement("img");
+            picture.classList.add("user-picture");
+            picture.setAttribute('src','/images/user.png')
+            messageContent.appendChild(sender);
+            messageContent.appendChild(text);
+            messageContent.appendChild(timestamp);
+            message.appendChild(picture);
+            message.appendChild(messageContent);
+            document.querySelector('.messages').append(message);
+            var block = document.querySelector(".messages");
+            block.scrollTop = block.scrollHeight;
+        })
+
+        var joinRoom = function () {
+            connection.invoke('joinRoom','@Model.CurrentChat.Id')
+                .then(res => {
+                    console.log("Room Joined!", res);
+                })
+                .catch(err => {
+                    console.error("Failed to join Room",err);
+                })
+        }
+
+        connection.start()
+            .then(function () {
+                joinRoom();
+            })
+            .catch(function (err) {
+                console.log(err)
+            })
+
+        var sendMessage = function (event) {
+            event.preventDefault();
+
+            var data = new FormData(event.target);
+            document.getElementById('message-input').value = '';
+            connection.invoke('sendMessage', parseInt(@Model.CurrentChat.Id),'@User.Identity.Name', data.get('text'))
+                .then(res => {
+                    console.log("Message Sent!")
+                })
+                .catch(err => {
+                    console.log("Failed to send message!")
+                })
+        }
+    </script>

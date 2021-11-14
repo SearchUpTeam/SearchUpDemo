@@ -18,11 +18,8 @@ namespace Persistence
         public DbSet<MessageAttachedFile> MessageFiles { get; set; }
         public DbSet<ChatMembership> ChatMemberships { get; set; }
         public DbSet<EventMembership> EventMemberships { get; set; }
-        
-        public SearchUpContext(DbContextOptions<SearchUpContext> options) : base(options)
-        {
-            Database.EnsureCreated();
-        }
+
+        public SearchUpContext(DbContextOptions<SearchUpContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

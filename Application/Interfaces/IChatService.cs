@@ -12,6 +12,9 @@ namespace Application.Interfaces
         Task Update(Chat chat);
         Task Delete(Chat chat);
         Task JoinChat(int chatId, int userId);
+        Task LeaveChat(int chatId, int userId);
+        Task<bool> IsUserInChat(int userId,int chatId);
         Task CreateMessage(Message message);
+
     }
 }

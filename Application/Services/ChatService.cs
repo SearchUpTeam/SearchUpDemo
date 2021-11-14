@@ -16,7 +16,9 @@ namespace Application.Services
         {
             _context = context;
         }
-        public async Task CreateAsync(Chat chat, int userId)
+        public async Task CreateAsync(
+            Chat chat,
+            int userId)
         {
             MemberType memberType;
             if (chat.ChatType == ChatType.Default)
@@ -45,7 +47,10 @@ namespace Application.Services
         }
         public async Task<Chat> GetChatByIdAsync(int id)
         {
-            var chat = await _context.Chats.FindAsync(id);
+            var chat = await _context.Chats.Where(c => c.Id == id)
+                .Include(c => c.Messages)
+                .ThenInclude(m=>m.Sender)
+                .FirstOrDefaultAsync();
             return chat;
         }
         public async Task<IEnumerable<Chat>> GetChatsAsync(int userId)
@@ -59,7 +64,14 @@ namespace Application.Services
                 .ToListAsync();
 
         }
-        public async Task JoinChat(int chatId, int userId)
+        public async Task<bool> IsUserInChat(int userId, int chatId)
+        {
+            return await _context.ChatMemberships
+                .AnyAsync(m => m.UserId == userId && m.ChatId == chatId);
+        }
+        public async Task JoinChat(
+            int chatId,
+            int userId)
         {
             var membership = new ChatMembership()
             {
@@ -68,6 +80,16 @@ namespace Application.Services
                 MemberType = MemberType.Participant
             };
             await _context.ChatMemberships.AddAsync(membership);
+            await _context.SaveChangesAsync();
+        }
+        public async Task LeaveChat(
+            int chatId,
+            int userId)
+        {
+            var member = await _context.ChatMemberships
+                .Where(m => m.ChatId == chatId && m.UserId == userId)
+                .FirstOrDefaultAsync();
+            _context.ChatMemberships.Remove(member);
             await _context.SaveChangesAsync();
         }
         public async Task Update(Chat chat)

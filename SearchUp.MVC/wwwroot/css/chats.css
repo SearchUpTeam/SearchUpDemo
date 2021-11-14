@@ -13,6 +13,7 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    font-family: 'Montserrat', sans-serif;
 }
 
 a {
@@ -59,45 +60,68 @@ a {
 .chats {
     padding-left: 20px;
     width: 20%;
-    overflow-y:scroll;
-}
-
-.chat-picture {
-    float: left;
+    overflow-y: auto;
+    max-height: inherit;
 }
 
 .chat-window {
     width: 80%;
     display: flex;
     flex-direction: column;
+    background-image: url(/images/chat-background.png);
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
-.welcome-message {
-    font-size: 20px;
-    color: white;
+.leave {
     font-weight: bold;
+    color: #fff;
+    align-self: flex-end;
+    padding: 10px;
 }
 
 .messages {
-    background-image: url(../images/chat-background.png);
-    background-repeat: no-repeat;
-    background-size: cover;
     flex: 1;
     padding: 5px 0;
     display: flex;
-    flex-direction: column-reverse;
-}
-
-.user-picture {
-    float: left;
+    flex-direction: column;
+    overflow-y: auto;
 }
 
 .message_item {
-    width: 40%;
+    width: fit-content;
+    max-width: 80%;
     background-color: white;
     border-radius: 10px;
     padding: 5px 5px;
     margin: 5px 10px;
+    display: flex;
+    word-wrap: anywhere;
+}
+
+/*message_content*/
+.message_content {
+    margin-left: 10px;
+}
+
+.sender {
+    font-weight: bold;
+    color: rgb(114, 114, 231);
+}
+
+.timestamp {
+    opacity: 0.4;
+    float: right;
+}
+
+.user-picture {
+    height: 50px;
+    width: 50px;
+}
+
+/*----------------------------*/
+.message_item:first-child {
+    margin-top: auto;
 }
 
 .message-input {
