@@ -1,37 +1,71 @@
 ﻿@{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_NavBarLayout.cshtml";
     ViewBag.Title = "UserProfile";
 }
+@using Domain;
 @model Application.ViewModels.UserProfileViewModel
 
-<div class="subheader_inner">
-    <nav class="nav">
-        <a class="nav_link" href="#">My profile</a>
-        <a class="nav_link" href="#">Friends</a>
-        <a class="nav_link" href="#">Visited events</a>
-        <a class="nav_link" href="#">My events</a>
-        <a class="nav_link" href="#">Find event</a>
-    </nav>
-</div>
-<div class="content">
-    <div class="userInfo">
-        <div class="photo"></div>
-        <div class="bustle">
-            <h1>
-                @Model.Username
-            </h1>
-            <p>@Model.About</p>
-            <div class="events"></div>
-            <h2>Events</h2>
-            @foreach (var eventObj in Model.Events)
-            {
-                <div class="event">
-                    <h3>@eventObj.Title</h3>
-                    <p>Description: @eventObj.Description</p>
-                    <p>Start Time: @eventObj.StartTime</p>
-                    <p>End Time: @eventObj.EndTime</p>
-                </div>
+<link rel="stylesheet" href="/css/user-profile.css">
+
+<div class="user-profile">
+    <div class="sidebar user-profile-sidebar">
+        <img class="user-avatar" id="user-avatar-main" src="/images/defaultAvatar.png" alt="">
+        <div class="user-interests">
+            @foreach (var interest in Model.Interests){
+                <div class="interest-tag">#@interest.Name</div>
             }
+        </div>
+        <ul class="user-stats">
+            <li>@Model.FollowersCount followers</li>
+            <li>@Model.FollowingsCount follows</li>
+            <li>@Model.Events.Count() events</li>
+        </ul>
+    </div>
+
+    <div class="main-column">
+        <div class="user-info-main">
+            <p class="user-name" id="user-name-main" align="left">@Model.Username</p>
+
+            <div class="user-description">
+                @{
+                    if (Model.About != null){
+                        <p class="user-prop-heading">About me:</p>
+                        <p id="about-user">Model.About</p>
+                    }
+                }
+            </div>
+        </div>
+
+        <div class="users-profile-events">
+            <div class="user-events-heading"><h1 align="left">Events:</h1></div>
+            
+            @{
+                if (Model.Events.Count() != 0){
+                    foreach (var eventObj in Model.Events){
+                        <div class="event-item">
+                            <div class="event-item-wrap">
+                                <div class="event-item-left">
+                                    <h4 class="event-item-heading">@eventObj.Title</h4>
+                                    <p class="event-item-description">@eventObj.Description</p>
+                                </div>
+                                <div class="event-item-tags">
+                                    @foreach (var interest in eventObj.Topics){
+                                        <div class="interest-tag">#@interest.Name</div>
+                                    }
+                                </div>
+                                <div class="event-item-times">
+                                    <p class="event-item-starttime">start: <span class="starttime-vlaue">@eventObj.StartTime</span></p>
+                                    <p class="event-item-endtime">end: <span class="endtime-value">@eventObj.StartTime</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else{
+                    <p style="font-size:25px">There is no event yet ;(</p>
+                }
+            }
+            
         </div>
     </div>
 </div>

@@ -23,8 +23,10 @@ namespace Application.Services
             var eventsId = await _context.EventMemberships
                 .Where(m => m.UserId == userId)
                 .Select(m => m.EventId).ToArrayAsync();
-
-            return await _context.Events.Where(e => eventsId.Contains(e.Id)).ToListAsync();
+            
+            return await _context.Events.Where(e => eventsId.Contains(e.Id))
+                .Include(e => e.Topics)
+                .ToListAsync();
         }
         public async Task<IEnumerable<Event>> GetOrganizedByUserAsync(int userId)
         {
@@ -32,7 +34,9 @@ namespace Application.Services
                 .Where(m => m.UserId == userId && m.MemberType == MemberType.Organizer)
                 .Select(m => m.EventId).ToArrayAsync();
 
-            return await _context.Events.Where(e => eventsId.Contains(e.Id)).ToListAsync();
+            return await _context.Events.Where(e => eventsId.Contains(e.Id))
+                .Include(e => e.Topics)
+                .ToListAsync();
         }
         public async Task<IEnumerable<Event>> GetVisitedByUserAsParticipantAsync(int userId)
         {
@@ -40,11 +44,15 @@ namespace Application.Services
                 .Where(m => m.UserId == userId && m.MemberType == MemberType.Participant)
                 .Select(m => m.EventId).ToArrayAsync();
 
-            return await _context.Events.Where(e => eventsId.Contains(e.Id)).ToListAsync();
+            return await _context.Events.Where(e => eventsId.Contains(e.Id))
+                .Include(e => e.Topics)
+                .ToListAsync();
         }
         public async Task<IEnumerable<Event>> GetBySearchRequestAsync(string searchRequest)
         {
-            return await _context.Events.Where(e => e.Title.Contains(searchRequest)).ToListAsync();
+            return await _context.Events.Where(e => e.Title.Contains(searchRequest))
+                .Include(e => e.Topics)
+                .ToListAsync();
         }
         public async Task SubscribeAsync(int eventId, int userId)
         {
