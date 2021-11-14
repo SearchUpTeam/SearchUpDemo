@@ -32,7 +32,8 @@ a{
 .post-link{
     background: none;
     border: none;
-    font-size: 20px;
+    font-weight: 300;
+    font-size: 36px;
     font-weight: lighter;
 
 }
