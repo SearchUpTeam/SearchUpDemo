@@ -9,7 +9,10 @@
 
 <div class="user-profile">
     <div class="sidebar user-profile-sidebar">
-        <img class="user-avatar" id="user-avatar-main" src="/images/defaultAvatar.png" alt="">
+        @{
+            var currentAvatar = Model.Avatars?.ToArray()[0].Path ?? "defaultAvatar.png";
+            <img class="user-avatar" id="user-avatar-main" src="@($"/images/users/{currentAvatar}")">
+        }
         <div class="user-interests">
             @foreach (var interest in Model.Interests){
                 <div class="interest-tag">#@interest.Name</div>
@@ -45,7 +48,12 @@
                         <div class="event-item">
                             <div class="event-item-wrap">
                                 <div class="event-item-left">
-                                    <h4 class="event-item-heading">@eventObj.Title</h4>
+                                    
+                                    @* @Html.ActionLink(eventObj.Title,
+                                                    controllerName:EventProfileControlller, actionName:Index, 
+                                                    new {id = eventObj.Id}, new {@class="event-item-title"}) *@
+                                    <a href="#" class="event-item-title">@eventObj.Title</a>
+
                                     <p class="event-item-description">@eventObj.Description</p>
                                 </div>
                                 <div class="event-item-tags">
