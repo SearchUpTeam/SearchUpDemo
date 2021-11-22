@@ -91,6 +91,7 @@ a{
 }
 
 .sidebar{
+    max-width: min-content;
     display: flex;
     flex-direction: column;
 }

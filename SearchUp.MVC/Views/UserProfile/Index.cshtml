@@ -8,7 +8,7 @@
 <link rel="stylesheet" href="/css/user-profile.css">
 
 <div class="user-profile">
-    <div class="sidebar user-profile-sidebar">
+    <div class="sidebar">
         @{
             var currentAvatar = Model.Avatars?.ToArray()[0].Path ?? "defaultAvatar.png";
             <img class="user-avatar" id="user-avatar-main" src="@($"/images/users/{currentAvatar}")">
