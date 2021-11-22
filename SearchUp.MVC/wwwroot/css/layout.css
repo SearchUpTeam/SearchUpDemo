@@ -17,12 +17,12 @@ body{
     margin: auto;
 }
 
-.header-inner, .footer-inner{
-    padding: 20px 0;
+header{
+    border-bottom: 1px solid black;
 }
 
-.header-inner{
-    border-bottom: 1px solid black;
+.header-inner, .footer-inner{
+    padding: 20px 0;
 }
 
 a{
@@ -51,7 +51,7 @@ a{
 }
 
 .logo{
-    font-weight: 600;
+    font-weight: 200;
     font-size: 48px;
     line-height: 59px;
 }
@@ -60,11 +60,14 @@ a{
     font-size: 25px;
 }
 
+.nav-bar{
+    border-bottom: 1px solid black;
+}
+
 .nav-menu{
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
-    border-bottom: 1px solid black;
 }
 
 .nav-link{
@@ -88,6 +91,7 @@ a{
 }
 
 .sidebar{
+    max-width: min-content;
     display: flex;
     flex-direction: column;
 }
@@ -106,7 +110,6 @@ a{
 /* EVENT ITEM */
 .event-item{
     background-color: #e2e2e2;
-    border-radius: 15px;
     margin: 25px 0;
 }
 .event-item-wrap{
@@ -117,6 +120,9 @@ a{
     text-align: left;
     font-size: 21px;
     flex: 3;
+}
+.event-item-title{
+    font-weight: 400;
 }
 
 .event-item-tags{
