@@ -9,6 +9,13 @@
         "dist/browser/signalr.min.js.map",
         "dist/browser/signalr.min.js"
       ]
+    },
+    {
+      "library": "jquery@3.6.0",
+      "destination": "wwwroot/jquery/",
+      "files": [
+        "dist/jquery.slim.min.js"
+      ]
     }
   ]
 }
