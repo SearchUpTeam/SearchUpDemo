@@ -4,8 +4,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
-using System.Collections.Generic;
-using System.Linq;
 using Application.Interfaces;
 
 namespace SearchUp.MVC.Controllers
@@ -17,13 +15,20 @@ namespace SearchUp.MVC.Controllers
         private readonly IEventService _eventService;
         private readonly IFollowingService _followingService;
         private readonly IInterestsService _interestsService;
+        private readonly IFileService _fileService;
 
-        public UserProfileController(UserManager<User> userManager, IEventService eventService, IFollowingService followingService, IInterestsService interestsService)
+        public UserProfileController(
+            UserManager<User> userManager,
+            IEventService eventService,
+            IFollowingService followingService,
+            IInterestsService interestsService,
+            IFileService fileService)
         {
             _userManager = userManager;
             _eventService = eventService;
             _followingService = followingService;
             _interestsService = interestsService;
+            _fileService = fileService;
         }
         public async Task<IActionResult> Index()
         {
@@ -31,7 +36,7 @@ namespace SearchUp.MVC.Controllers
             var profile = new UserProfileViewModel() { 
                 Username = user.UserName, 
                 About = user.About, 
-                Avatars = user.Avatars, 
+                Avatars = await _fileService.GetAvatarsAsync(user.Id), 
                 Events = await _eventService.GetVisitedByUserAsync(user.Id),
                 Interests = await _interestsService.GetUserInterestsAsync(user.Id),
                 FollowersCount = await _followingService.CountFollowersAsync(user.Id),
