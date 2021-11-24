@@ -13,6 +13,7 @@ namespace Application
             services.AddScoped<IChatService, ChatService>();
             services.AddScoped<IFollowingService, FollowingService>();
             services.AddScoped<IInterestsService, InterestsService>();
+            services.AddScoped<IFileService, FileService>();
             return services;
         }
     }
