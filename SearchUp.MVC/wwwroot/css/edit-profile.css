@@ -1,0 +1,91 @@
+﻿html, body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+/*header*/
+.header {
+    background-color: grey;
+    padding: 10px 10px;
+}
+
+.apl-btn {
+    background-color: rgb(180, 250, 110);
+    border: 3px solid white;
+    font-size: 0.8em;
+}
+
+.edit-profile-section {
+    padding-top: 10px;
+    flex: 1;
+}
+
+.change-btn {
+    margin-top: 1em;
+    background-color: grey;
+    font-weight: bold;
+    color: white;
+    font-size: 0.8em;
+}
+
+#change-avatar {
+    display: none;
+}
+
+.avatar {
+    width: 400px;
+    height: 20vw;
+    border-radius: 50%;
+}
+
+.avatar-lable {
+    margin-top: 15px;
+    background-color: gray;
+    padding: 5px 5px;
+    font-weight: bold;
+    color: white;
+    font-size: 0.8em;
+    cursor: pointer;
+}
+
+    .avatar-lable:hover {
+        opacity: 0.8;
+    }
+
+#input-username {
+    width: 60%;
+}
+
+#input-about {
+    width: 80%;
+    resize: none;
+}
+
+.interests {
+    width: 75%;
+}
+
+.interest_item {
+    margin-top: 5px;
+    padding: 5px 10px;
+    background-color: grey;
+    display: flex;
+    justify-content: space-between;
+    word-break: break-all;
+}
+
+.close {
+    transition: .1s linear;
+}
+
+.close:hover {
+    color: red;
+}

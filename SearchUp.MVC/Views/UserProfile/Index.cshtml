@@ -10,7 +10,7 @@
 <div class="user-profile">
     <div class="sidebar">
         @{
-            var currentAvatar = Model.Avatars?.ToArray()[0].Path ?? "defaultAvatar.png";
+            var currentAvatar = Model.Avatars != null&&Model.Avatars.Count() > 0? Model.Avatars.Last().Path : "defaultAvatar.png";
             <img class="user-avatar" id="user-avatar-main" src="@($"/images/users/{currentAvatar}")">
         }
         <div class="user-interests">
@@ -33,7 +33,7 @@
                 @{
                     if (Model.About != null){
                         <p class="user-prop-heading">About me:</p>
-                        <p id="about-user">Model.About</p>
+                        <p id="about-user">@Model.About</p>
                     }
                 }
             </div>
