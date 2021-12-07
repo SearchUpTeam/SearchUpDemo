@@ -17,5 +17,6 @@ namespace Application.Interfaces
         Task CreateInterestTagAsync(InterestTag interestTag);
         Task DeleteInterestTagAsync(int interestId);
         Task EditUserInterestsByIdAsync(int userId, IList<int> interestsId);
+        Task<IEnumerable<InterestTag>> GetNewForUser(int userId);
     }
 }

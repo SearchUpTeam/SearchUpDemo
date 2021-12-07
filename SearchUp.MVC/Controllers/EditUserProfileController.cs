@@ -46,7 +46,8 @@ namespace SearchUp.MVC.Controllers
                 About = user.About,
                 Avatars = await _fileService.GetAvatarsAsync(user.Id),
                 Email = user.Email,
-                Interests = (ICollection<InterestTag>)await _interestsService.GetUserInterestsAsync(user.Id)
+                UserInterests = await _interestsService.GetUserInterestsAsync(user.Id),
+                Interests = await _interestsService.GetNewForUser(user.Id)
             };
             return View(editProfile);
         }

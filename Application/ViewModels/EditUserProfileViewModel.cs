@@ -14,7 +14,8 @@ namespace Application.ViewModels
         public ICollection<Avatar> Avatars { get; set; }
         [Required]
         public string Email { get; set; }
-        public ICollection<InterestTag> Interests { get; set; }
+        public IEnumerable<InterestTag> UserInterests { get; set; }
+        public IEnumerable<InterestTag> Interests { get; set; }
         [DataType(DataType.Password)]
         [Display(Name = "OldPassword")]
         public string OldPassword { get; set; }

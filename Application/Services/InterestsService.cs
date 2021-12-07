@@ -64,15 +64,28 @@ namespace Application.Services
         {
             var user = await _context.Users.Include(u => u.Interests).SingleAsync(u => u.Id == userId);
             List<InterestTag> newInterests = new List<InterestTag>();
+            var interests = await _context.InterestTags.ToListAsync();
             foreach(var id in interestsId)
             {
-                var item = user.Interests.FirstOrDefault(i => i.Id == id);
+                var item = interests.FirstOrDefault(i => i.Id == id);
                 if(item!=null)
                     newInterests.Add(item);
             }
             user.Interests = newInterests;
-            _context.Users.Update(user);
             await _context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<InterestTag>> GetNewForUser(int userId)
+        {
+            var userInterests = await GetUserInterestsAsync(userId);
+            var interests = await _context.InterestTags.ToListAsync();
+            List<InterestTag> result = new List<InterestTag>();
+            foreach(var tag in interests)
+            {
+                if (!userInterests.Contains(tag))
+                    result.Add(tag);
+            }
+            return result;
         }
     }
 }
