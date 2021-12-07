@@ -1,0 +1,7 @@
+.dynamic-search-result {
+    position: absolute;
+}
+
+.dynamic-search-result-item{
+    cursor: pointer;
+}
