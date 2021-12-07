@@ -10,7 +10,7 @@ namespace Application.Services
 {
     public class InterestsService : IInterestsService
     {
-        SearchUpContext _context;
+        private readonly SearchUpContext _context;
 
         public InterestsService(SearchUpContext context)
         {
@@ -34,7 +34,9 @@ namespace Application.Services
 
         public async Task DeleteInterestTagAsync(int interestId)
         {
-            throw new System.NotImplementedException();
+            var item = await _context.InterestTags.FindAsync(interestId);
+            _context.Remove(item);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<IEnumerable<InterestTag>> GetUserInterestsAsync(int userId)
@@ -56,6 +58,21 @@ namespace Application.Services
         public async Task RemoveInterestsFromUserAsync(int userId, params int[] interestsId)
         {
             throw new System.NotImplementedException();
+        }
+
+        public async Task EditUserInterestsByIdAsync(int userId, IList<int> interestsId)
+        {
+            var user = await _context.Users.Include(u => u.Interests).SingleAsync(u => u.Id == userId);
+            List<InterestTag> newInterests = new List<InterestTag>();
+            foreach(var id in interestsId)
+            {
+                var item = user.Interests.FirstOrDefault(i => i.Id == id);
+                if(item!=null)
+                    newInterests.Add(item);
+            }
+            user.Interests = newInterests;
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
         }
     }
 }

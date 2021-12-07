@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -83,6 +84,13 @@ namespace SearchUp.MVC.Controllers
                 return RedirectToAction("Index", "UserProfile");
             }
             return RedirectToAction("Index");
+        }
+        [HttpPost]
+        public async Task UpdateInterests(List<int> myItems)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            await _interestsService.EditUserInterestsByIdAsync(user.Id, myItems);
+
         }
 
         private string GetUniqueFileName(string fileName)

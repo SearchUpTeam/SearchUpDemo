@@ -1,4 +1,4 @@
-﻿@{ 
+﻿@{
     Layout = "~/Views/Shared/Bootstrap_Layout.cshtml";
     ViewBag.Title = "EditUserProfile";
 }
@@ -6,13 +6,13 @@
 @using Application.ViewModels;
 @model EditUserProfileViewModel
 
-<form method="post" class="edit-profile" enctype="multipart/form-data">
+<form method="post" class="edit-profile" enctype="multipart/form-data" onkeypress="if(event.keyCode == 13) return false;">
     <div class="container-fluid">
         <header class="header">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col">
-                        <button class="btn float-right apl-btn" asp-controller="EditUserProfile" asp-action="SaveChanges">Apply changes</button>
+                        <button class="btn float-right apl-btn" asp-controller="EditUserProfile" asp-action="SaveChanges" onclick="sendCurrentInterests()">Apply changes</button>
                     </div>
                 </div>
             </div>
@@ -52,27 +52,22 @@
                     <div class="col-12">
                         <h1>My Interests</h1>
                     </div>
+                </div>
+                <div class="row">
                     <div class="col-8">
                         <div class="form-group">
                             <input type="text" class="form-control" placeholder="Search">
                         </div>
                     </div>
                 </div>
-                <div class="row interests">
+                <select multiple data-role="tagsinput" id="tagsinput" class="row interests">
                     @{
                         foreach (var av in Model.Interests)
                         {
-                            <div class="col-4">
-                                <div class="interest_item">
-                                    <div class="interest-name">#@av.Name</div>
-                                    <button type="button" class="close" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                            </div>
+                            <option value="@av.Id">#@av.Name</option>
                         }
                     }
-                </div>
+                </select>
                 <div class="row">
                     <div class="col-9">
                         <div class="form-group">
@@ -106,3 +101,29 @@
         </section>
     </div>
 </form>
+<script>
+    var items = Array();
+    function sendCurrentInterests() {
+        $.ajax({
+            url: '@Url.Action("UpdateInterests", "EditUserProfile")',
+            type: 'POST',
+            data: { myItems: items },
+            dataType:"json"
+        })
+    }
+    function removeItemOnce(arr, value) {
+        var index = arr.indexOf(value);
+        if (index > -1) {
+            arr.splice(index, 1);
+        }
+        return arr;
+    }
+    $('select').on('itemRemoved', function (event) {
+        var item = event.item.replace('#', '');
+        removeItemOnce(items, item);
+    });
+    $('select').on('itemAdded', function (event) {
+        var item = event.item.replace('#', '');
+        items.push(item);
+    });
+</script>
