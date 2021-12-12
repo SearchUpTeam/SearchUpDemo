@@ -18,10 +18,13 @@ namespace Application.Services
         {
             _context = context;
         }
+
         public async Task<Event> GetEventByIdAsync(int eventId)
         {
-            throw new NotImplementedException();
+            return await _context.Events.Include(e => e.AttachedFiles)
+                .Include(e => e.memberships).Include(e => e.Topics).FirstOrDefaultAsync(v => v.Id == eventId);  
         }
+
         public async Task<IEnumerable<Event>> GetVisitedByUserAsync(int userId)
         {
             var eventsId = await _context.EventMemberships

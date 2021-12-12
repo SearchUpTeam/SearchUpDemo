@@ -30,10 +30,18 @@ namespace SearchUp.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> EventProfile(int eventId)
         {
-            // var eventObj = _eventService.GetEventById();
-            // var eventViewModel = new EPWM();
-            // return View(eventViewModel);
-            throw new NotImplementedException();
+            var eventObj = _eventService.GetEventByIdAsync(eventId);
+            var eventViewModel = new EventProfileViewModel();
+            eventViewModel.AttachedFiles = eventObj.Result.AttachedFiles;
+            eventViewModel.ChatId = eventObj.Result.ChatId;
+            eventViewModel.Description = eventObj.Result.Description;
+            eventViewModel.StartTime = eventObj.Result.StartTime;
+            eventViewModel.EndTime = eventObj.Result.EndTime;
+            eventViewModel.Memberships = eventObj.Result.memberships;
+            eventViewModel.Title = eventObj.Result.Title;
+            eventViewModel.Topics = eventObj.Result.Topics;
+            return View(eventViewModel);
+            //throw new NotImplementedException();
         }
 
         [HttpGet]
@@ -58,7 +66,7 @@ namespace SearchUp.MVC.Controllers
                 Description = eventViewModel.Description,
                 StartTime = eventViewModel.StartTime,
                 EndTime = eventViewModel.EndTime,
-                Topics = eventViewModel.Topics,
+                //Topics = eventViewModel.Topics,
                 AttachedFiles = eventViewModel.Files,
                 ChatId = eventChat.Id
             };
