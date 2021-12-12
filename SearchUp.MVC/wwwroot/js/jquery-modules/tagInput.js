@@ -4,18 +4,18 @@ export function tagInput(selector, preselectedTags){
     preselectedTags.forEach(tag => {pushTag(tagInputObj, tag, true)});
 }
 
-export function pushTag(tagInputObj, tagTitle, isPreselected){
-    var tagId = getTagId(tagInputObj, tagTitle);
+export function pushTag(tagInputObj, tagTitle, tagId, isPreselected){
+    var htmlTagId = getTagId(tagInputObj, tagTitle);
     isPreselected = isPreselected===undefined? false: isPreselected;
     if(getAllTags(tagInputObj).includes(tagTitle)){
-        var tag = $(`#${tagId}`);
+        var tag = $(`#${htmlTagId}`);
         tag.attr('tagSelected', 'true');
         tag.show();
     }
     else {
-        tagInputObj.append(`<span class="tag interest-tag" id="${tagId}" tagSelected="true" tagPreselected="${isPreselected}">
+        tagInputObj.append(`<span class="tag interest-tag" id="${htmlTagId}" tagSelected="true" tagPreselected="${isPreselected}">
                                 <span class="tag-title">${tagTitle}</span>
-                                <span class="tag-remove" id="tag-remove-${tagId}"> ×</span>
+                                <span class="tag-remove" id="tag-remove-${htmlTagId}"> ×</span>
                             </span>`);
         $(`#tag-remove-${tagId}`).click({tag_input: tagInputObj, tag_title: tagTitle} ,popTag);
     }

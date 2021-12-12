@@ -20,7 +20,7 @@ export function selectInterests(selector, opts){
     selectObj.append(`<input id="${selector}-dynamic-search" class="form-control mt-3 dynamic-search" type="text" placeholder="Search for existing topics and click them to add"></input>`);
     
     var clickSesrchItem = function(event, tagInputId=`#${selector}-tag-input`){
-        pushTag($(tagInputId), event.data.tag_title, false);
+        pushTag($(tagInputId), event.data.tag_title, event.data.tag_id, false);
     }
     dynamicSearch(`#${selector}-dynamic-search`, opts.apiURL, opts.maxNumOfResults, opts.submitAllowed, opts.renderItem, clickSesrchItem);
 }
