@@ -18,6 +18,10 @@ namespace Application.Services
         {
             _context = context;
         }
+        public async Task<Event> GetEventByIdAsync(int eventId)
+        {
+            throw new NotImplementedException();
+        }
         public async Task<IEnumerable<Event>> GetVisitedByUserAsync(int userId)
         {
             var eventsId = await _context.EventMemberships
@@ -97,10 +101,17 @@ namespace Application.Services
                 
             }
         }
-        public async Task CreateAsync(Event eventModel)
+        public async Task CreateAsync(Event eventModel, int creatorId)
         {
-            await _context.Events.AddAsync(eventModel);
-            await _context.SaveChangesAsync();
+            var membership = new EventMembership(){Event = eventModel, UserId = creatorId, MemberType = MemberType.Organizer};
+            
+            if(eventModel.memberships == null)
+                eventModel.memberships = new List<EventMembership>(){membership};
+            else
+                eventModel.memberships.Add(membership);
+            
+            _context.Events.Add(eventModel);
+            await _context.SaveChangesAsync(); 
         }
         public async Task DeleteAsync(int eventId)
         {

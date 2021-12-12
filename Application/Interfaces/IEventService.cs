@@ -14,7 +14,7 @@ namespace Application.Interfaces
         Task UnsubscribeAsync(int eventId, int userId);
         Task KickMemberAsync(int eventId, int userId);
         Task UnkickMemberAsync(int eventId, int userId);
-        Task CreateAsync(Event eventModel);
+        Task CreateAsync(Event eventModel, int creatorId);
         Task UpdateAsync(Event eventModel);
         Task DeleteAsync(int eventId);
     }
