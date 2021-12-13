@@ -10,5 +10,5 @@ selectInterests('#select-interests',
 );
 // insert selected interests into hidden input when submit
 $("#create-event-form").submit(function() {
-    $('#added-interests').val(getAddedInterests('select-interests'));
+    $('#added-interests').val(getAddedInterests('select-interests').map(el => el.id));
 })
