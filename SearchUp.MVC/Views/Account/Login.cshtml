@@ -4,10 +4,15 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Log In";
 }
+
+<link rel="stylesheet" href="/css/authorization-forms.css">
+
 <div class="content">
     <div class="container">
         <div class="login-content">
             <div class="sighUpForm">
+                <h2 clas="auth-form-heading">Log In</h2>
+                @Html.ValidationSummary(false, "", new {@class = "error"})
                 <form method="post" asp-controller="Account" asp-action="Login">
                     <div>
                         <label asp-for="Username"></label><br />

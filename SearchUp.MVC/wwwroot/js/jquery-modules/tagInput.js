@@ -4,20 +4,20 @@ export function tagInput(selector, preselectedTags){
     preselectedTags.forEach(tag => {pushTag(tagInputObj, tag, true)});
 }
 
-export function pushTag(tagInputObj, tagTitle, isPreselected){
-    var tagId = getTagId(tagInputObj, tagTitle);
+export function pushTag(tagInputObj, tagTitle, tagId, isPreselected){
+    var htmlTagId = getTagId(tagInputObj, tagTitle);
     isPreselected = isPreselected===undefined? false: isPreselected;
-    if(getAllTags(tagInputObj).includes(tagTitle)){
-        var tag = $(`#${tagId}`);
+    if(getAllTags(tagInputObj).map(t=>t.title).includes(tagTitle)){
+        var tag = $(`#${htmlTagId}`);
         tag.attr('tagSelected', 'true');
         tag.show();
     }
     else {
-        tagInputObj.append(`<span class="tag interest-tag" id="${tagId}" tagSelected="true" tagPreselected="${isPreselected}">
+        tagInputObj.append(`<span class="tag interest-tag" elid="${tagId}" id="${htmlTagId}" tagSelected="true" tagPreselected="${isPreselected}">
                                 <span class="tag-title">${tagTitle}</span>
-                                <span class="tag-remove" id="tag-remove-${tagId}"> ×</span>
+                                <span class="tag-remove" id="tag-remove-${htmlTagId}"> ×</span>
                             </span>`);
-        $(`#tag-remove-${tagId}`).click({tag_input: tagInputObj, tag_title: tagTitle} ,popTag);
+        $(`#tag-remove-${htmlTagId}`).click({tag_input: tagInputObj, tag_title: tagTitle} ,popTag);
     }
 }
 
@@ -26,7 +26,7 @@ export function popTag(event){
     var tag_title = event.data.tag_title;
     var tagId = getTagId(tag_input, tag_title);
     var tag = $('#'+tagId);
-    if(getSelectedTags(tag_input).includes(tag_title)){
+    if(getSelectedTags(tag_input).map(t=>t.title).includes(tag_title)){
         $(tag).attr('tagSelected', 'false');
         $(tag).hide();
     }
@@ -35,7 +35,7 @@ export function popTag(event){
 export function getAllTags(tagInput){
     var result = []; 
     $(`#${tagInput.prop('id')} > .tag`).each(function() {
-        result.push($(this).children('.tag-title').text())
+        result.push({title: $(this).children('.tag-title').text(), id: parseInt($(this).attr('elid'))})
     });
     return result;
 }
@@ -45,7 +45,7 @@ export function getSelectedTags(tagInput){
     var tags = $(`#${tagInput.prop('id')} > .tag`);
     $(`#${tagInput.prop('id')} > .tag`).each(function() {
         if($(this).attr('tagSelected') == 'true')
-            result.push($(this).children('.tag-title').text())
+            result.push({title: $(this).children('.tag-title').text(), id: parseInt($(this).attr('elid'))})
     });
     return result;
 }
@@ -54,7 +54,7 @@ export function getRemovedTags(tagInput){
     var result = []; 
     $(`#${tagInput.prop('id')} > .tag`).each(function() {
         if($(this).attr('tagSelected') == 'false' && this.attr('tagPreselected') == 'true')
-            result.push($(this).children('.tag-title').text())
+            result.push({title: $(this).children('.tag-title').text(), id: parseInt($(this).attr('elid'))})
     });
     return result;
 }
@@ -63,7 +63,7 @@ export function getAddedTags(tagInput){
     var result = []; 
     $(`#${tagInput.prop('id')} > .tag`).each(function() {
         if($(this).attr('tagSelected') == 'true' && $(this).attr('tagPreselected') == 'false')
-            result.push($(this).children('.tag-title').text())
+            result.push({title: $(this).children('.tag-title').text(), id: parseInt($(this).attr('elid'))})
     });
     return result;
 }

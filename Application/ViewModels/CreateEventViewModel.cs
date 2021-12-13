@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using Domain;
@@ -19,15 +19,11 @@ namespace Application.ViewModels
         public DateTime EndTime { get; set; }
         [Required]
         public string SelectedTopicsInput { get; set; }
-
-        public IEnumerable<int> SelectedTopicsId
-        {
-            get
-            {
-                return SelectedTopicsInput.Split(',')
-               .Select(t => Int32.Parse(t))
-               .ToList();
-            }
+    
+        public IEnumerable<int> SelectedTopicsId {
+            get {return SelectedTopicsInput.Split(',')
+                .Select(t=> Int32.Parse(t))
+                .ToList();}
         }
         public ICollection<EventAttachedFile> Files { get; set; }
     }

@@ -42,7 +42,8 @@ function renderResult(result, targetEl, renderItem, clickItem){
 
     if(clickItem != undefined){
         for (var i = 0; i<result.length; i++){
-            $('#'+idList[i]).click({tag_title: result[i].Name}, clickItem)
+            $('#'+idList[i]).click({tag_title: result[i].Name, tag_id: idList[i].replace('option-', '')}, 
+                                    clickItem)
         }
     }
 }
