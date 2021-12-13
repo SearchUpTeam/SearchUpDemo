@@ -33,6 +33,23 @@ namespace SearchUp.MVC.Controllers
         }
 
         [HttpGet]
+        public async Task<IActionResult> EventProfile(int eventId)
+        {
+            var eventObj = _eventService.GetEventByIdAsync(eventId);
+            var eventViewModel = new EventProfileViewModel();
+            eventViewModel.AttachedFiles = eventObj.Result.AttachedFiles;
+            eventViewModel.ChatId = eventObj.Result.ChatId;
+            eventViewModel.Description = eventObj.Result.Description;
+            eventViewModel.StartTime = eventObj.Result.StartTime;
+            eventViewModel.EndTime = eventObj.Result.EndTime;
+            eventViewModel.Memberships = eventObj.Result.memberships;
+            eventViewModel.Title = eventObj.Result.Title;
+            eventViewModel.Topics = eventObj.Result.Topics;
+            return View(eventViewModel);
+            //throw new NotImplementedException();
+        }
+
+        [HttpGet]
         [Authorize]
         public IActionResult CreateEvent()
         {
@@ -65,7 +82,6 @@ namespace SearchUp.MVC.Controllers
                 //return RedirectToAction("EventProfile");
             }
             return View("Error");
-
         }
     }
 }

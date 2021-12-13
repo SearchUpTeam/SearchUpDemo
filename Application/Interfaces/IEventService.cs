@@ -6,6 +6,7 @@ namespace Application.Interfaces
 {
     public interface IEventService
     {
+        Task<Event> GetEventByIdAsync(int eventId);
         Task<IEnumerable<Event>> GetVisitedByUserAsync(int userId);
         Task<IEnumerable<Event>> GetOrganizedByUserAsync(int userId);
         Task<IEnumerable<Event>> GetVisitedByUserAsParticipantAsync(int userId);
