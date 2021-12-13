@@ -40,6 +40,8 @@ namespace Persistence
             modelBuilder.Entity<EventMembership>().HasKey(membership => new { membership.UserId, membership.EventId});
             modelBuilder.Entity<ChatMembership>().HasKey(membership => new { membership.UserId, membership.ChatId});
 
+            modelBuilder.Entity<InterestTag>().HasAlternateKey(tag => new {tag.Name});
+
             base.OnModelCreating(modelBuilder);
         }
     }
