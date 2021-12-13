@@ -21,6 +21,7 @@ export function selectInterests(selector, opts){
     
     var clickSesrchItem = function(event, tagInputId=`#${selector}-tag-input`){
         pushTag($(tagInputId), event.data.tag_title, event.data.tag_id, false);
+
     }
     dynamicSearch(`#${selector}-dynamic-search`, opts.apiURL, opts.maxNumOfResults, opts.submitAllowed, opts.renderItem, clickSesrchItem);
 }

@@ -21,8 +21,9 @@ namespace SearchUp.MVC.Controllers
         readonly IInterestsService _interestsService;
         readonly IChatService _chatService;
         readonly IWebHostEnvironment _appEnviroment;
-
+        
         public EventsController(IEventService eventService, UserManager<User> userManager, IInterestsService interestsService, IChatService chatService, IWebHostEnvironment appEnvironment)
+
         {
             _eventService = eventService;
             _userManager = userManager;
@@ -64,6 +65,7 @@ namespace SearchUp.MVC.Controllers
                 //return RedirectToAction("EventProfile");
             }
             return View("Error");
+
         }
     }
 }
