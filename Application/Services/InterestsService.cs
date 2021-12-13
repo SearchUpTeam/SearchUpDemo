@@ -16,15 +16,26 @@ namespace Application.Services
         {
             _context = context;
         }
-
-        public async Task AddInterestsToEventAsync(int userId, params int[] interestsId)
+        public async Task<ICollection<InterestTag>>  GetInterestsBySubstringAsync(string substring, int maxNumOfResults)
         {
-            throw new System.NotImplementedException();
+            return await _context.InterestTags
+                .Where(i => i.Name.Contains(substring))
+                .Take(maxNumOfResults)
+                .ToListAsync();
         }
 
-        public async Task AddInterestsToUserAsync(int userId, params int[] interestsId)
+        public async Task<ICollection<InterestTag>> GetInterestsById(IEnumerable<int> idArray)
         {
-            throw new System.NotImplementedException();
+            return await _context.InterestTags
+                .Where(i => idArray.Contains(i.Id))
+                .ToListAsync();
+        }
+
+        public async Task AddInterestsToEventAsync(int eventId, IEnumerable<int> idColl)
+        {
+            var eventObj = await _context.Events.FindAsync(eventId);
+            var topics = await _context.InterestTags.Where(i=>idColl.Contains(i.Id)).ToListAsync();
+            
         }
 
         public async Task CreateInterestTagAsync(InterestTag interestTag)
@@ -37,23 +48,13 @@ namespace Application.Services
             throw new System.NotImplementedException();
         }
 
-        public async Task<IEnumerable<InterestTag>> GetUserInterestsAsync(int userId)
+        public async Task<ICollection<InterestTag>> GetUserInterestsAsync(int userId)
         {
             var user = await _context.User.Include(u => u.Interests).SingleAsync(u => u.Id == userId);
             return user.Interests;
         }
 
         public async Task<IEnumerable<InterestTag>> GetEventInterestsAsync(int eventId)
-        {
-            throw new System.NotImplementedException();
-        }
-        
-        public async Task RemoveInterestsFromEventAsync(int userId, params int[] interestsId)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public async Task RemoveInterestsFromUserAsync(int userId, params int[] interestsId)
         {
             throw new System.NotImplementedException();
         }

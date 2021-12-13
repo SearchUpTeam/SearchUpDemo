@@ -6,14 +6,10 @@ namespace Application.Interfaces
 {
     public interface IInterestsService
     {
-        Task<IEnumerable<InterestTag>> GetUserInterestsAsync(int userId);
-        Task AddInterestsToUserAsync(int userId, params int[] interestsId);
-        Task RemoveInterestsFromUserAsync(int userId, params int[] interestsId);
-
+        Task<ICollection<InterestTag>>  GetInterestsBySubstringAsync(string substring, int maxNumOfResults);
+        Task<ICollection<InterestTag>> GetInterestsById(IEnumerable<int> idArray);
+        Task<ICollection<InterestTag>> GetUserInterestsAsync(int userId);
         Task<IEnumerable<InterestTag>> GetEventInterestsAsync(int userId);
-        Task AddInterestsToEventAsync(int userId, params int[] interestsId);
-        Task RemoveInterestsFromEventAsync(int userId, params int[] interestsId);
-
         Task CreateInterestTagAsync(InterestTag interestTag);
         Task DeleteInterestTagAsync(int interestId);
     }
