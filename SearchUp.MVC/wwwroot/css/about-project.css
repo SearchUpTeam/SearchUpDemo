@@ -1,0 +1,41 @@
+﻿.site-description img {
+    float: right;
+    margin: 0 0 4px 10px;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.5;
+    color: #000000;
+    min-height: 100vh;
+    font-size:24px;
+}
+
+body h3 h2{
+    display: flex;
+    flex-direction: column;
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.5;
+    color: #000000;
+    min-height: 100vh;
+}
+
+h2{
+    font-size:36px;
+}
+
+h3{
+    font-size:24px;
+}
+
+.img_container img {
+    width: 250px;
+    height: 300px;
+}
+
+.command td{
+    padding-left: 30px;
+    padding-right: 30px;
+}
