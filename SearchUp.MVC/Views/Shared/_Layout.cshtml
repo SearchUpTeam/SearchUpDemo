@@ -1,10 +1,14 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewBag.Title</title>
-     <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/layout.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,800;0,900;1,100;1,200;1,800&display=swap" rel="stylesheet">
@@ -15,11 +19,13 @@
             <div class="header-inner horizontal-flex-container">
                 <a class="logo" asp-controller="Home" asp-action="Index">SearchUp</a>
                 <nav class="nav">
-                    @if (!User.Identity.IsAuthenticated) { 
-                        <a class="nav-link" asp-controller="Account" asp-action="Login">Log In</a>
-                        <a class="nav-link" asp-controller="Account" asp-action="Register">Sign Up</a>
+                    @if (!User.Identity.IsAuthenticated)
+                    {
+                        <a class="nav-link" asp-controller="Account" asp-action="Login">@Localizer["LogIn"]</a>
+                        <a class="nav-link" asp-controller="Account" asp-action="Register">@Localizer["SignUp"]</a>
                     }
-                    else {
+                    else
+                    {
                         <form method="post" asp-controller="Account" asp-action="Logout">
                             <input class="post-link" type="submit" value="Exit" />
                         </form>
@@ -28,15 +34,19 @@
             </div>
         </div>
     </header>
-
+    <div class="container language-container">
+        <div>
+            @await Html.PartialAsync("_SelectLanguage")
+        </div>
+    </div>
     @RenderBody()
 
     <footer>
         <div class="container">
             <div class="footer-inner horizontal-flex-container">
                 <nav class="nav">
-                    <a class="nav-link" href="#">About us</a>
-                    <a class="nav-link" href="#">About project</a>
+                    <a class="nav-link" href="#">@Localizer["AboutUs"]</a>
+                    <a class="nav-link" href="#">@Localizer["AboutProject"]</a>
                 </nav>
             </div>
         </div>

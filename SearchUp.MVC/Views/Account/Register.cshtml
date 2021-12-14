@@ -5,22 +5,29 @@
     ViewBag.Title = "Sign Up";
 }
 
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
+<link rel="stylesheet" href="/css/authorization-forms.css">
+
 <div class="content">
     <div class="container">
         <div class="signup-content">
             <div class="sighUpForm">
+                <h2>@Localizer["SignUp"]</h2>
                 <form method="post" asp-controller="Account" asp-action="Register">
-                    <p>Username</p>
+                    <p>@Localizer["Username"]</p>
                     <input asp-for="Username" type="text">
-                    <p>Email</p>
+                    <p>@Localizer["Email"]</p>
                     <input asp-for="Email" type="email">
-                    <p>BirthDate</p>
+                    <p>@Localizer["BirthDate"]</p>
                     <input asp-for="BirthDate" type="date">
-                    <p>Password</p>
+                    <p>@Localizer["Password"]</p>
                     <input asp-for="Password" type="password">
-                    <p>Confirm password</p>
+                    <p>@Localizer["ConfirmPassword"]</p>
                     <input asp-for="PasswordConfirm" type="password">
-                    <p><input type="submit" value="Sign up"></p>
+                    <p><input type="submit" value="@Localizer["SignUpButton"]"></p>
                 </form>
             </div>
         </div>

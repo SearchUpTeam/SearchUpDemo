@@ -5,31 +5,35 @@
     ViewBag.Title = "Log In";
 }
 
+@using Microsoft.AspNetCore.Mvc.Localization
+
+@inject IViewLocalizer Localizer
+
 <link rel="stylesheet" href="/css/authorization-forms.css">
 
 <div class="content">
     <div class="container">
         <div class="login-content">
             <div class="sighUpForm">
-                <h2 clas="auth-form-heading">Log In</h2>
-                @Html.ValidationSummary(false, "", new {@class = "error"})
+                <h2 clas="auth-form-heading">@Localizer["LogIn"]</h2>
+                @Html.ValidationSummary(false, "", new { @class = "error" })
                 <form method="post" asp-controller="Account" asp-action="Login">
                     <div>
-                        <label asp-for="Username"></label><br />
+                        <label asp-for="Username">@Localizer["Username"]</label><br />
                         <input asp-for="Username" />
                         <span asp-validation-for="Username"></span>
                     </div>
                     <div>
-                        <label asp-for="Password"></label><br />
+                        <label asp-for="Password">@Localizer["Password"]</label><br />
                         <input asp-for="Password" />
                         <span asp-validation-for="Password"></span>
                     </div>
                     <div>
-                        <label asp-for="RememberMe"></label><br />
+                        <label asp-for="RememberMe">@Localizer["Remember"]</label><br />
                         <input asp-for="RememberMe" />
                     </div>
                     <div>
-                        <input type="submit" value="Войти" />
+                        <input type="submit" value="@Localizer["LogInButton"]" />
                     </div>
                 </form>
             </div>
