@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Application.Interfaces;
+using System;
+using System.IO;
+using System.Text;
 
 namespace SearchUp.MVC.Controllers
 {
@@ -42,6 +45,11 @@ namespace SearchUp.MVC.Controllers
                 FollowersCount = await _followingService.CountFollowersAsync(user.Id),
                 FollowingsCount =await _followingService.CountFollowingsAsync(user.Id)
             };
+
+            string path = "D:\\" + user.UserName + ".txt";
+            string text = "User name : " + user.UserName + "\nAbout : " + profile.About + "\nFollowers count : " + profile.FollowersCount.ToString() + "\nFollowings count : " + profile.FollowingsCount.ToString();
+            System.IO.File.WriteAllText(path, text);
+
             return View(profile);
         }
     }
