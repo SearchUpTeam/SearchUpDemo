@@ -2,6 +2,8 @@
 using Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Http;
+using System;
 using System.Threading.Tasks;
 
 namespace SearchUp.MVC.Controllers
@@ -28,8 +30,8 @@ namespace SearchUp.MVC.Controllers
                 User user = new User { Email = model.Email, UserName = model.Username, BirthDate = model.BirthDate };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
-                {
-                    return RedirectToAction("Index", "Home");
+                {                    
+                    return RedirectToAction("Index", "UserProfile");
                 }
                 else
                 {
@@ -44,8 +46,11 @@ namespace SearchUp.MVC.Controllers
         [HttpGet]
         public IActionResult Login()
         {
-            return View();
+            string res;
+            Request.Cookies.TryGetValue("LastVisit", out res);            
+            return View(new LoginViewModel() { Username = res, Password = null});
         }
+
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
@@ -55,13 +60,19 @@ namespace SearchUp.MVC.Controllers
                     await _signInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
+                    DateTime now = DateTime.Now;
+                    Response.Cookies.Append("LastVisit", model.Username, new CookieOptions
+                    {
+                        Expires = now.AddHours(1)
+                    });
                     return RedirectToAction("Index", "UserProfile");
                 }
                 else
                 {
                     ModelState.AddModelError("", "Wrong login and(or) password");
-                }
-            }
+                }  
+            }            
+
             return View(model);
         }
         [HttpPost]
