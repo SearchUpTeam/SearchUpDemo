@@ -21,8 +21,13 @@ namespace Application.Services
 
         public async Task<Event> GetEventByIdAsync(int eventId)
         {
-            return await _context.Events.Include(e => e.AttachedFiles)
-                .Include(e => e.memberships).Include(e => e.Topics).FirstOrDefaultAsync(v => v.Id == eventId);  
+            return await _context.Events
+                .Include(e => e.AttachedFiles)
+                .Include(e => e.Topics)
+                .Include(e => e.memberships)
+                    .ThenInclude(m => m.User)
+                        .ThenInclude(u => u.Avatars)
+                .FirstOrDefaultAsync(v => v.Id == eventId);  
         }
 
         public async Task<IEnumerable<Event>> GetVisitedByUserAsync(int userId)

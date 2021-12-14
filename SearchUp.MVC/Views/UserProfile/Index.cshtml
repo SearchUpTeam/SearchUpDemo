@@ -48,12 +48,7 @@
                         <div class="event-item">
                             <div class="event-item-wrap">
                                 <div class="event-item-left">
-                                    
-                                    @* @Html.ActionLink(eventObj.Title,
-                                                    controllerName:EventProfileControlller, actionName:Index, 
-                                                    new {id = eventObj.Id}, new {@class="event-item-title"}) *@
-                                    <a href="#" class="event-item-title">@eventObj.Title</a>
-
+                                    <a asp-controller="Events" asp-action="EventProfile" asp-route-id="@eventObj.Id">@eventObj.Title</a>
                                     <p class="event-item-description">@eventObj.Description</p>
                                 </div>
                                 <div class="event-item-tags">

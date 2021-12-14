@@ -11,7 +11,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Application.Interfaces;
 using System;
-
 namespace SearchUp.MVC.Controllers
 {
     public class EventsController : Controller
@@ -33,20 +32,21 @@ namespace SearchUp.MVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> EventProfile(int eventId)
+        public async Task<IActionResult> EventProfile(int id)
         {
-            var eventObj = _eventService.GetEventByIdAsync(eventId);
-            var eventViewModel = new EventProfileViewModel();
-            eventViewModel.AttachedFiles = eventObj.Result.AttachedFiles;
-            eventViewModel.ChatId = eventObj.Result.ChatId;
-            eventViewModel.Description = eventObj.Result.Description;
-            eventViewModel.StartTime = eventObj.Result.StartTime;
-            eventViewModel.EndTime = eventObj.Result.EndTime;
-            eventViewModel.Memberships = eventObj.Result.memberships;
-            eventViewModel.Title = eventObj.Result.Title;
-            eventViewModel.Topics = eventObj.Result.Topics;
+            Event eventObj = await _eventService.GetEventByIdAsync(id);
+            var eventViewModel = new EventProfileViewModel(){
+                Id = eventObj.Id,
+                Title = eventObj.Title,
+                Description = eventObj.Description,
+                StartTime = eventObj.StartTime,
+                EndTime = eventObj.EndTime,
+                Participants = eventObj.memberships.Select(m => m.User).ToList(),
+                Topics = eventObj.Topics,
+                AttachedFiles = eventObj.AttachedFiles,
+                ChatId = eventObj.ChatId
+            };            
             return View(eventViewModel);
-            //throw new NotImplementedException();
         }
 
         [HttpGet]

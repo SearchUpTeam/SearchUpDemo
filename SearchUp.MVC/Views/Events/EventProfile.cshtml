@@ -82,9 +82,9 @@
     <div class="container">
         <ul class="nav-participants">
             @{
-                if (Model.Memberships.Count() != 0)
+                if (Model.Participants.Count() != 0)
                 {
-                    @foreach (var member in Model.Memberships)
+                    @foreach (var member in Model.Participants)
                     {
                             <li class="nav-participant">
                                 <img src="../../images/events-logos/тут має бути аватар юзера.png" />
