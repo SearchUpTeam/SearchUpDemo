@@ -35,7 +35,19 @@ h3{
     height: 300px;
 }
 
+.img_container2 img {
+    width: 300px;
+    height: 200px;
+}
+
 .command td{
     padding-left: 30px;
     padding-right: 30px;
+}
+
+.command2 td {
+    text-align:center;
+    padding-left: 60px;
+    padding-right: 60px;
+    font-size: 36px;
 }
