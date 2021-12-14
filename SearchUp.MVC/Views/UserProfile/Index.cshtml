@@ -44,7 +44,8 @@
             
             @{
                 if (Model.Events.Count() != 0){
-                    foreach (var eventObj in Model.Events){
+                    var events = Model.Events.Reverse();
+                    foreach (var eventObj in events){
                         <div class="event-item">
                             <div class="event-item-wrap">
                                 <div class="event-item-left">
@@ -52,6 +53,7 @@
                                     <p class="event-item-description">@eventObj.Description</p>
                                 </div>
                                 <div class="event-item-tags">
+
                                     @foreach (var interest in eventObj.Topics){
                                         <div class="interest-tag">#@interest.Name</div>
                                     }

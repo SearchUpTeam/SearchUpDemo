@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using Domain;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
 
 namespace Application.ViewModels
 {
@@ -25,6 +26,6 @@ namespace Application.ViewModels
                 .Select(t=> Int32.Parse(t))
                 .ToList();}
         }
-        public ICollection<EventAttachedFile> Files { get; set; }
+        public IFormFileCollection Files { get; set; }
     }
 }
