@@ -1,6 +1,7 @@
 ﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Home";
+    ViewBag.Localization = true;
 }
 
 @using Microsoft.AspNetCore.Mvc.Localization
@@ -16,16 +17,16 @@
             </div>
         </div>
         <br>
-        <p> With the help of the service you can search for and participate in events of interest to the user. These events will be created by other users (organizers). Subscription to the event can be both free (for example, going to play board or online games) and paid for tickets. The event will have a theme and some characteristics and a list of users who will participate. Subscribers and organizers will be able to correspond, and if desired, the subscription to the event will be controlled by the organizer. </p>
+        <p>@Localizer["IntroDescription"]</p>
         <br>
         <ul>
-            <li>View user events and profiles (possibly unauthorized)</li>
-            <li>Registration</li>
-            <li>Authorization of existing users</li>
-            <li>Selection of interesting events by user interest tags and event tags</li>
-            <li>Event subscription</li>
-            <li>Creating an event</li>
-            <li>Delete event</li>
+            <li>@Localizer["FirstItem"]</li>
+            <li>@Localizer["SecondItem"]</li>
+            <li>@Localizer["ThirdItem"]</li>
+            <li>@Localizer["FourthItem"]</li>
+            <li>@Localizer["FifthItem"]</li>
+            <li>@Localizer["SixthItem"]</li>
+            <li>@Localizer["SeventhItem"]</li>
         </ul>
         <br /><br /><br />
                     <table class="command2">

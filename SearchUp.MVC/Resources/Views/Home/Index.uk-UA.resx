@@ -117,7 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="FifthItem" xml:space="preserve">
+    <value>Підписка на подію</value>
+  </data>
+  <data name="FirstItem" xml:space="preserve">
+    <value>Перегляд подій та профілів користувачів (можливо для неавторизованих)</value>
+  </data>
+  <data name="FourthItem" xml:space="preserve">
+    <value>Вибір цікавих подій за тегами інтересів користувачів і тегами подій</value>
+  </data>
+  <data name="IntroDescription" xml:space="preserve">
+    <value>За допомогою сервісу можна шукати та брати участь у заходах, які цікавлять користувача. Ці події будуть створюватися іншими користувачами (організаторами). Підписка на подію може бути як безкоштовною (наприклад, пограти в настільні чи онлайн-ігри), так і платною за квитками. Захід матиме тему та деякі характеристики та список користувачів, які братимуть участь. Підписники та організатори зможуть листуватися, а за бажанням підписку на захід контролюватиме організатор.</value>
+  </data>
   <data name="IntroTitle" xml:space="preserve">
     <value>Для чого цей сайт?</value>
+  </data>
+  <data name="SecondItem" xml:space="preserve">
+    <value>Реєстрація</value>
+  </data>
+  <data name="SeventhItem" xml:space="preserve">
+    <value>Видалення події</value>
+  </data>
+  <data name="SixthItem" xml:space="preserve">
+    <value>Створення події</value>
+  </data>
+  <data name="ThirdItem" xml:space="preserve">
+    <value>Авторизація існуючих користувачів</value>
   </data>
 </root>

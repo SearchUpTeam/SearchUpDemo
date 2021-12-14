@@ -117,7 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="FifthItem" xml:space="preserve">
+    <value>Event subscription</value>
+  </data>
+  <data name="FirstItem" xml:space="preserve">
+    <value>View user events and profiles (possibly unauthorized)</value>
+  </data>
+  <data name="FourthItem" xml:space="preserve">
+    <value>Selection of interesting events by user interest tags and event tags</value>
+  </data>
+  <data name="IntroDescription" xml:space="preserve">
+    <value>With the help of the service you can search for and participate in events of interest to the user. These events will be created by other users (organizers). Subscription to the event can be both free (for example, going to play board or online games) and paid for tickets. The event will have a theme and some characteristics and a list of users who will participate. Subscribers and organizers will be able to correspond, and if desired, the subscription to the event will be controlled by the organizer.</value>
+  </data>
   <data name="IntroTitle" xml:space="preserve">
     <value>What is this site for?</value>
+  </data>
+  <data name="SecondItem" xml:space="preserve">
+    <value>Registration</value>
+  </data>
+  <data name="SeventhItem" xml:space="preserve">
+    <value>Delete event</value>
+  </data>
+  <data name="SixthItem" xml:space="preserve">
+    <value>Creating an event</value>
+  </data>
+  <data name="ThirdItem" xml:space="preserve">
+    <value>Authorization of existing users</value>
   </data>
 </root>

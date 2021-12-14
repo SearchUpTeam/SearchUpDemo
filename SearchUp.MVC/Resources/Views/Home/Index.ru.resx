@@ -117,7 +117,31 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="FifthItem" xml:space="preserve">
+    <value>Подписка на мероприятие</value>
+  </data>
+  <data name="FirstItem" xml:space="preserve">
+    <value>Просмотр пользовательских событий и профилей (возможно для неавторизованных)</value>
+  </data>
+  <data name="FourthItem" xml:space="preserve">
+    <value>Подбор интересных событий по тегам интересов пользователей и тегам событий</value>
+  </data>
+  <data name="IntroDescription" xml:space="preserve">
+    <value>С помощью сервиса вы можете искать и участвовать в интересующих пользователя событиях. Эти события будут созданы другими пользователями (организаторами). Подписка на мероприятие может быть как бесплатной (например, поиграть в настольные или онлайн-игры), так и платной за билеты. Мероприятие будет иметь тему и некоторые характеристики, а также список пользователей, которые будут участвовать. Подписчики и организаторы смогут вести переписку, и при желании подписка на мероприятие будет контролироваться организатором.</value>
+  </data>
   <data name="IntroTitle" xml:space="preserve">
     <value>Для чего этот сайт?</value>
+  </data>
+  <data name="SecondItem" xml:space="preserve">
+    <value>Регистрация</value>
+  </data>
+  <data name="SeventhItem" xml:space="preserve">
+    <value>Удаление мероприятия</value>
+  </data>
+  <data name="SixthItem" xml:space="preserve">
+    <value>Создание мероприятия</value>
+  </data>
+  <data name="ThirdItem" xml:space="preserve">
+    <value>Авторизация существующих пользователей</value>
   </data>
 </root>
