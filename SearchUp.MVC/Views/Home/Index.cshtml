@@ -3,16 +3,16 @@
     ViewBag.Title = "Home";
 }
 
-
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
 <link rel="stylesheet" href="/css/about-project.css">
-
 
 <div class="content">
     <div class="container">
 
         <div class="intro">
             <div class="intro_inner">
-                <h1 class="intro_title" style="text-align: center;">What is this site for?</h1>
+                <h1 class="intro_title" style="text-align: center;">@Localizer["IntroTitle"]</h1>
             </div>
         </div>
         <br>

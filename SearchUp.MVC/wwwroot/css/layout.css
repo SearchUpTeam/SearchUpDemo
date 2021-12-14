@@ -17,6 +17,11 @@ body{
     margin: auto;
 }
 
+.language-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
 header{
     border-bottom: 1px solid black;
 }
