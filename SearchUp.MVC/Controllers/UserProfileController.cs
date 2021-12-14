@@ -30,9 +30,14 @@ namespace SearchUp.MVC.Controllers
             _interestsService = interestsService;
             _fileService = fileService;
         }
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int id)
         {
-            var user = await _userManager.GetUserAsync(User);
+            User user;
+            if (id == 0)
+                user = await _userManager.GetUserAsync(User);
+            else
+                user = await _userManager.FindByIdAsync(id.ToString());
+            
             var profile = new UserProfileViewModel() { 
                 Username = user.UserName, 
                 About = user.About, 
