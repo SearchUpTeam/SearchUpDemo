@@ -37,5 +37,10 @@ namespace Application.Services
                 .SingleOrDefaultAsync();
         }
 
+        public async Task UploadFilesForEvent(EventAttachedFile file)
+        {
+            await _context.EventFiles.AddAsync(file);
+            await _context.SaveChangesAsync();
+        }
     }
 }

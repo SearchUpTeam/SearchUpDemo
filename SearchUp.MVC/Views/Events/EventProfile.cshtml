@@ -21,7 +21,7 @@
 
 <div class="chatroom">
     <div class="container">
-        <p><a class="chatroom-link" href="#">enter chatroom</a></p>
+        <p><a asp-controller="MyChats" asp-action="Chat" asp-route-id="@Model.ChatId" class="chatroom-link">enter chatroom</a></p>
     </div>
 </div>
 
@@ -31,9 +31,9 @@
             @{
                 if (Model.AttachedFiles.Count() != 0)
                 {
-                   @foreach (var photo in Model.AttachedFiles)
+                   @foreach (var file in Model.AttachedFiles)
                    {
-                        <li class="nav-photo"><img src="@($"/images/events-files/{photo}")"/></li>
+                        <li class="nav-photo"><img src="@file.Path"></li>
                    }      
                 }
                 else
@@ -87,8 +87,13 @@
                     @foreach (var member in Model.Participants)
                     {
                             <li class="nav-participant">
-                                <img src="../../images/events-logos/тут має бути аватар юзера.png" />
-                                <p>Тут має бути ім'я юзера</p>
+                            <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@member.Id">
+                            @{
+                                var currentAvatar = member.Avatars != null && member.Avatars.Count() > 0? member.Avatars.Last().Path : "defaultAvatar.png";
+                                <img src="@($"/images/users/{currentAvatar}")">
+                                <p>@member.UserName</p>
+                            }
+                            </a>
                             </li>
                     }
                 }
