@@ -10,7 +10,7 @@ namespace Application.Interfaces
         Task<IEnumerable<Event>> GetVisitedByUserAsync(int userId);
         Task<IEnumerable<Event>> GetOrganizedByUserAsync(int userId);
         Task<IEnumerable<Event>> GetVisitedByUserAsParticipantAsync(int userId);
-        Task<IEnumerable<Event>> GetBySearchRequestAsync(string searchRequest);
+        Task<IEnumerable<Event>> GetBySearchRequestAsync(string searchRequest, int skip, int take);
         Task SubscribeAsync(int eventId, int userId);
         Task UnsubscribeAsync(int eventId, int userId);
         Task KickMemberAsync(int eventId, int userId);

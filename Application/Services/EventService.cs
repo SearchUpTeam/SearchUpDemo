@@ -60,10 +60,11 @@ namespace Application.Services
                 .Include(e => e.Topics)
                 .ToListAsync();
         }
-        public async Task<IEnumerable<Event>> GetBySearchRequestAsync(string searchRequest)
+        public async Task<IEnumerable<Event>> GetBySearchRequestAsync(string searchRequest, int skip, int take)
         {
             return await _context.Events.Where(e => e.Title.Contains(searchRequest))
                 .Include(e => e.Topics)
+                .Skip(skip).Take(take)
                 .ToListAsync();
         }
         public async Task SubscribeAsync(int eventId, int userId)

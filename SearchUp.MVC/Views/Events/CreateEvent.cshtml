@@ -14,7 +14,7 @@
 
 <div class="container-sm col-sm-8 border border-dark mt-5 p-3">
     <h1>Create Event</h1>
-    <form method="post" asp-controller="Events" asp-action="CreateEvent" id="create-event-form">
+    <form method="post" asp-controller="Events" asp-action="CreateEvent" id="create-event-form"  enctype="multipart/form-data">
         <div class="mb-3">
             <label for="input-event-title" class="form-label fw-bold">Event Title</label>
             <input asp-for="Title" type="text" class="form-control" id="input-event-title">
@@ -45,7 +45,7 @@
        </div>
        <div class="mb-3">
             <label for="formFileMultiple" class="form-label fw-bold">Additional files(images, videos, gifs etc.)</label>
-            <input class="form-control" type="file" id="formFileMultiple" multiple>
+            <input asp-for="Files" class="form-control" id="formFileMultiple">
         </div>
       <button type="submit" class="btn btn-success">Create Event</button>
     </form>
