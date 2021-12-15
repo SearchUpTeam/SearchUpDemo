@@ -12,6 +12,7 @@ using System.Linq;
 using Application.Interfaces;
 using System;
 using System.IO;
+using System.Security.Claims;
 
 namespace SearchUp.MVC.Controllers
 {
@@ -34,8 +35,13 @@ namespace SearchUp.MVC.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(int page = 1, string searchStr = ""){
-            var viewModel = new EventSearchViewModel(){SearchStr=""};
+        public async Task<IActionResult> Index(int page = 1, string searchStr = "")
+        {
+            var user  = await _userManager.GetUserAsync(User);
+            var viewModel = new EventSearchViewModel(){
+                SearchStr="",
+                CurrentUserId = user.Id
+            };
             if (searchStr != ""){
                 const int numOfResults = 10;
                 viewModel.Events = await _eventService.GetBySearchRequestAsync(searchStr, skip: numOfResults*(page-1), take: numOfResults);
@@ -124,6 +130,30 @@ namespace SearchUp.MVC.Controllers
                 return RedirectToAction("EventProfile", "Events", new {id = eventObj.Id});
             }
             return View("Error");
+        }
+    
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> DeleteEvent(int eventId)
+        {
+            await _eventService.DeleteAsync(eventId);
+            return RedirectToAction("Index", "Events");
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> Subscribe(int eventId, int userId)
+        {
+            await _eventService.SubscribeAsync(eventId, userId);
+            return RedirectToAction("EventProfile", "Events", new {id = eventId});
+        }
+
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> UnSubscribe(int eventId, int userId)
+        {
+            await _eventService.UnsubscribeAsync(eventId, userId);
+            return RedirectToAction("Index", "Events");
         }
     }
 }
