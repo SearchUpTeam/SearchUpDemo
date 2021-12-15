@@ -76,6 +76,7 @@ namespace Application.Services
                 MemberType = MemberType.Participant
             };
             await _context.EventMemberships.AddAsync(newMembership);
+            await _context.SaveChangesAsync();
         }
         public async Task UnsubscribeAsync(int eventId, int userId)
         {

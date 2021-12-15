@@ -43,13 +43,13 @@
                                             </form>
                                         }
                                         else{
-                                            <form asp-controller="Events" asp-action="Subscribe" asp-route-userId="@Model.CurrentUserId" asp-route-eventId="@eventObj.Id">
+                                            <form asp-controller="Events" asp-action="UnSubscribe" asp-route-userId="@Model.CurrentUserId" asp-route-eventId="@eventObj.Id">
                                                 <button type="submit">UnSubscribe</button>
                                             </form>
                                         }
                                     }
                                     else{
-                                        <form asp-controller="Events" asp-action="Unsubscribe" asp-route-userId="@Model.CurrentUserId" asp-route-eventId="@eventObj.Id">
+                                        <form asp-controller="Events" asp-action="Subscribe" asp-route-userId="@Model.CurrentUserId" asp-route-eventId="@eventObj.Id">
                                             <button type="submit">Subscribe</button>
                                         </form>
                                     }
