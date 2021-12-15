@@ -3,6 +3,7 @@
     ViewBag.Title = "Search Events";
 }
 @model Application.ViewModels.EventSearchViewModel
+@using Domain.Enums;
 
 <link rel="stylesheet" href="/css/layout.css">
 <link rel="stylesheet" href="/css/events-page.css">
@@ -28,6 +29,31 @@
                                 <div class="event-item-left">
                                     <a asp-controller="Events" asp-action="EventProfile" asp-route-id="@eventObj.Id">@eventObj.Title</a>
                                     <p class="event-item-description">@eventObj.Description</p>
+                                </div>
+                                <div class="buttons-section">
+                                @{ 
+                                    var participantsId = eventObj.memberships.Select(m => m.UserId).ToArray();
+                                    var organizerId = eventObj.memberships.Where(m=>m.MemberType == MemberType.Organizer)
+                                                                          .Select(m => m.UserId).ToArray();
+
+                                    if(participantsId.Contains(Model.CurrentUserId)){
+                                        if(organizerId.Contains(Model.CurrentUserId)){
+                                            <form asp-controller="Events" asp-action="DeleteEvent" asp-route-eventId="@eventObj.Id">
+                                                <button type="submit">Delete</button>
+                                            </form>
+                                        }
+                                        else{
+                                            <form asp-controller="Events" asp-action="Subscribe" asp-route-userId="@Model.CurrentUserId" asp-route-eventId="@eventObj.Id">
+                                                <button type="submit">UnSubscribe</button>
+                                            </form>
+                                        }
+                                    }
+                                    else{
+                                        <form asp-controller="Events" asp-action="Unsubscribe" asp-route-userId="@Model.CurrentUserId" asp-route-eventId="@eventObj.Id">
+                                            <button type="submit">Subscribe</button>
+                                        </form>
+                                    }
+                                }
                                 </div>
                                 <div class="event-item-tags">
 

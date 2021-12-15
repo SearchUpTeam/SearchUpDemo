@@ -64,6 +64,7 @@ namespace Application.Services
         {
             return await _context.Events.Where(e => e.Title.Contains(searchRequest))
                 .Include(e => e.Topics)
+                .Include(e => e.memberships)
                 .Skip(skip).Take(take)
                 .ToListAsync();
         }
@@ -124,7 +125,11 @@ namespace Application.Services
         }
         public async Task DeleteAsync(int eventId)
         {
-            _context.Events.Remove( await _context.Events.FindAsync(eventId));
+            Event eventObj = await _context.Events
+                                    .Include(e => e.memberships)
+                                    .FirstOrDefaultAsync(e => e.Id == eventId);
+
+            _context.Events.Remove(eventObj);
             await _context.SaveChangesAsync();
         }
         public async Task UpdateAsync(Event eventModel)
