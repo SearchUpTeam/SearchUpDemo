@@ -91,26 +91,16 @@ namespace Application.Services
         public async Task KickMemberAsync(int eventId, int userId)
         {
             var membership = await _context.EventMemberships.FindAsync(userId, eventId);
-            try{ 
-                membership.IsKicked = true;
-                _context.Entry(membership).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-            }
-            catch(ArgumentException ex){
-                
-            }
+            membership.IsKicked = true;
+            _context.Entry(membership).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
         public async Task UnkickMemberAsync(int eventId, int userId)
         {
             var membership = await _context.EventMemberships.FindAsync(userId, eventId);
-            try{ 
-                membership.IsKicked = false;
-                _context.Entry(membership).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-            }
-            catch(ArgumentException ex){
-                
-            }
+            membership.IsKicked = false;
+            _context.Entry(membership).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
         }
         public async Task CreateAsync(Event eventModel, int creatorId)
         {
