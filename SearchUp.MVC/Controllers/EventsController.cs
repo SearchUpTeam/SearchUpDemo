@@ -145,6 +145,8 @@ namespace SearchUp.MVC.Controllers
         public async Task<IActionResult> Subscribe(int eventId, int userId)
         {
             await _eventService.SubscribeAsync(eventId, userId);
+            var eventObj = await _eventService.GetEventByIdAsync(eventId);
+            await _chatService.JoinChat(eventObj.ChatId, userId);
             return RedirectToAction("EventProfile", "Events", new {id = eventId});
         }
 
