@@ -1,0 +1,90 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Home";
+    ViewBag.Localization = true;
+}
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IViewLocalizer Localizer
+<link rel="stylesheet" href="/css/about-project.css">
+
+<div class="content">
+    <div class="container">
+
+        <div class="intro">
+            <div class="intro_inner">
+                <h1 class="intro_title" style="text-align: center;">@Localizer["IntroTitle"]</h1>
+            </div>
+        </div>
+        <br>
+        <p>@Localizer["IntroDescription"]</p>
+        <br>
+        <ul>
+            <li>@Localizer["FirstItem"]</li>
+            <li>@Localizer["SecondItem"]</li>
+            <li>@Localizer["ThirdItem"]</li>
+            <li>@Localizer["FourthItem"]</li>
+            <li>@Localizer["FifthItem"]</li>
+            <li>@Localizer["SixthItem"]</li>
+            <li>@Localizer["SeventhItem"]</li>
+        </ul>
+        <br /><br /><br />
+                    <table class="command2">
+                        <tr>
+                            <td>
+                                <div class="img_container2">
+                                    <img class="aboutUs_img" src="~/images/1.jpg" alt="1">
+                                </div>
+                            </td>
+
+                            <td>#party</td>
+
+                            <td>
+                                <div class="img_container2">
+                                    <img class="aboutUs_img" src="~/images/3.jpg" alt="3">
+                                </div>
+                            </td>                           
+
+                        </tr>
+
+                        <tr>
+
+                            <td>#movies</td>
+
+                            <td>
+                                <div class="img_container2">
+                                    <img class="aboutUs_img" src="~/images/4.jpg" alt="4">
+                                </div>
+                            </td>
+
+                            <td>#board games</td>
+
+                        </tr>
+
+                        <tr>
+                            <td>
+                                <div class="img_container2">
+                                    <img class="aboutUs_img" src="~/images/5.jpg" alt="5">
+                                </div>
+                            </td>
+
+                            <td>#evening</td>
+
+                            <td>
+                                <div class="img_container2">
+                                    <img class="aboutUs_img" src="~/images/6.jpg" alt="6">
+                                </div>
+                            </td>
+
+                        </tr>
+
+                    </table>
+        <br /><br />
+        <div class="subintro">
+            <div class="subintro_inner">
+            </div>
+        </div>
+
+    </div>
+</div>
+

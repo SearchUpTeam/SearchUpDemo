@@ -1,0 +1,77 @@
+﻿@{
+    Layout = "~/Views/Shared/_NavBarLayout.cshtml";
+    ViewBag.Title = "UserProfile";
+}
+@using Domain;
+@model Application.ViewModels.UserProfileViewModel
+
+<link rel="stylesheet" href="/css/user-profile.css">
+
+<div class="user-profile">
+    <div class="sidebar">
+        @{
+            var currentAvatar = Model.Avatars != null&&Model.Avatars.Count() > 0? Model.Avatars.Last().Path : "defaultAvatar.png";
+            <img class="user-avatar" id="user-avatar-main" src="@($"/images/users/{currentAvatar}")">
+        }
+        <div class="user-interests">
+            @foreach (var interest in Model.Interests){
+                <div class="interest-tag">#@interest.Name</div>
+            }
+        </div>
+        <ul class="user-stats">
+            <li>@Model.FollowersCount followers</li>
+            <li>@Model.FollowingsCount follows</li>
+            <li>@Model.Events.Count() events</li>
+        </ul>
+    </div>
+
+    <div class="main-column">
+        <div class="user-info-main">
+            <p class="user-name" id="user-name-main" align="left">@Model.Username</p>
+
+            <div class="user-description">
+                @{
+                    if (Model.About != null){
+                        <p class="user-prop-heading">About me:</p>
+                        <p id="about-user">@Model.About</p>
+                    }
+                }
+            </div>
+            <a asp-controller="EditUserProfile" asp-action="Index">Edit</a>
+        </div>
+
+        <div class="users-profile-events">
+            <div class="user-events-heading"><h1 align="left">Events:</h1></div>
+            
+            @{
+                if (Model.Events.Count() != 0){
+                    var events = Model.Events.Reverse();
+                    foreach (var eventObj in events){
+                        <div class="event-item">
+                            <div class="event-item-wrap">
+                                <div class="event-item-left">
+                                    <a asp-controller="Events" asp-action="EventProfile" asp-route-id="@eventObj.Id">@eventObj.Title</a>
+                                    <p class="event-item-description">@eventObj.Description</p>
+                                </div>
+                                <div class="event-item-tags">
+
+                                    @foreach (var interest in eventObj.Topics){
+                                        <div class="interest-tag">#@interest.Name</div>
+                                    }
+                                </div>
+                                <div class="event-item-times">
+                                    <p class="event-item-starttime">start: <span class="starttime-vlaue">@eventObj.StartTime</span></p>
+                                    <p class="event-item-endtime">end: <span class="endtime-value">@eventObj.StartTime</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else{
+                    <p style="font-size:25px">There is no event yet ;(</p>
+                }
+            }
+            
+        </div>
+    </div>
+</div>

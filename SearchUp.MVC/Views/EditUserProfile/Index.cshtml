@@ -1,0 +1,120 @@
+﻿@{
+    Layout = "~/Views/Shared/Bootstrap_Layout.cshtml";
+    ViewBag.Title = "EditUserProfile";
+}
+
+@using Application.ViewModels;
+@model EditUserProfileViewModel
+
+<form method="post" class="edit-profile" enctype="multipart/form-data" onkeypress="if(event.keyCode == 13) return false;">
+    <div class="container-fluid">
+        <header class="header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col">
+                        <button class="btn float-right apl-btn" asp-controller="EditUserProfile" asp-action="SaveChanges" onclick="sendCurrentInterests()">Apply changes</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="edit-profile-section">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-4">
+                        <div class="image-settings text-center">
+                            @{
+                                var currentAvatar = Model.Avatars != null && Model.Avatars.Count() > 0 ? Model.Avatars.Last().Path : "defaultAvatar.png";
+                                <div><img src="@($"/images/users/{currentAvatar}")" class="avatar img-fluid" id="imgshow" alt="default-avatar"></div>
+                            }
+
+
+                            <img class="user-avatar" id="user-avatar-main">
+                            <div class="form-group">
+                                <label for="change-avatar" class="avatar-lable">change avatar</label>
+                                <input type="file" class="form-control-file" id="change-avatar" accept="image/*" asp-for="NewAvatar">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-8">
+                        <div class="form-group">
+                            <label for="input-username">Username</label>
+                            <input type="text" class="form-control" id="input-username" asp-for="Username">
+                        </div>
+                        <div class="form-group">
+                            <label for="input-about">About</label>
+                            <textarea class="form-control" id="input-about" rows="5" placeholder="about me..." asp-for="About"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        <h1>My Interests</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col ">
+                        <select class="interests" multiple onchange="GetCurrentInterests(Array.from(this.selectedOptions).map(x => x.value ?? x.text))">
+                            @{
+                                foreach (var av in Model.UserInterests)
+                                {
+                                    <option selected value="@av.Id">#@av.Name</option>
+                                }
+                                foreach (var av in Model.Interests)
+                                {
+                                    <option value="@av.Id">#@av.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                    
+                    <div class="row">
+                        <div class="col-9">
+                            <div class="form-group">
+                                <label for="input-email">Email</label>
+                                <input type="email" class="form-control" id="input-email" asp-for="Email">
+                            </div>
+                        </div>
+                    </div>
+                    <a class="btn btn-secondary" data-toggle="collapse" data-target="#chng" role="button" aria-expanded="false" aria-controls="chng">Change password</a>
+                    <div class="row ">
+                        <div class="col-8">
+                            <div class="collapse" id="chng">
+                                <div class="card card-body">
+                                    <div class="form-group">
+                                        <label for="input-password">Old password</label>
+                                        <input type="password" class="form-control" asp-for="OldPassword">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="input-new-password">New password</label>
+                                        <input type="password" class="form-control" asp-for="NewPassword">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="input-new-password">Confirm new password</label>
+                                        <input type="password" class="form-control" asp-for="NewPasswordConfirm">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+</section>
+    </div>
+</form>
+<script>
+    var items = new Array();
+    function GetCurrentInterests(array) {
+        items = array;
+        console.log(array);
+    }
+    function sendCurrentInterests() {
+        $.ajax({
+            url: '@Url.Action("UpdateInterests", "EditUserProfile")',
+            type: 'POST',
+            data: { myItems: items },
+            dataType:"json"
+        })
+    }
+</script>

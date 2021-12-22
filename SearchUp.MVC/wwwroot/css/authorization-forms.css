@@ -1,0 +1,13 @@
+.auth-form-heading {
+    text-align: center;
+}
+
+.sighUpForm {
+    width: fit-content;
+    margin: auto;
+}
+
+.signup-content {
+    display: flex;
+    justify-content: center;
+}

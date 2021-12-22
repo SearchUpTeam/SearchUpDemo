@@ -1,0 +1,128 @@
+﻿.top-content {
+    border-bottom: 1px solid black;
+}
+
+.chatroom {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.chatroom-link {
+    color: #24FF00;
+}
+
+.photo-content {
+    border-bottom: 1px solid black;
+    margin-top: 15px;
+    padding-bottom: 20px;
+}
+
+.nav-photos {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.nav-photo {
+    list-style-type: none;
+}
+
+.nav-photo img{
+    width : 500px;
+}
+
+.description {
+    border-bottom: 1px solid black;
+    margin-top:  20px;
+    padding-bottom: 20px;
+}
+
+.text-description {
+    font-size: 24px;
+}
+
+.title-description {
+    font-size:40px;
+}
+
+.topics {
+    border-bottom: 1px solid black;
+    margin-top: 20px;
+    padding-bottom: 20px;      
+}
+
+.nav-topics {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.nav-topic {
+    font-size: 24px;
+    list-style-type: none;
+}
+
+
+.participants {
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+
+.nav-participants {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.nav-participant {
+    list-style-type: none;
+    font-size: 14px;
+    text-align:center;
+    margin:3px;
+}
+
+.nav-participant img {
+    width: 150px;
+    height: 150px;
+}
+
+.participants-name {
+    border-bottom: 1px solid black;
+    font-size: 48px;
+    margin-top: 20px;
+    padding-bottom: 20px;
+}
+
+.top {
+    display:flex;
+    
+    margin-top:15px;
+    margin-bottom:15px;
+}
+
+.title-event {
+    font-size: 48px;
+    float:left;
+    width:60%;
+}
+
+.date-time {    
+    font-size: 18px;
+    float: right;
+    width: 40%;
+    position: relative;
+}
+
+.date-time-text-start {
+    text-align: right;
+    position: absolute;
+    width:100%;
+    bottom: 25px;
+}
+
+.date-time-text-end {
+    text-align: right;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}

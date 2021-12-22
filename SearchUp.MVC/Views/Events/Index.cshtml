@@ -1,0 +1,76 @@
+@{
+    Layout = "~/Views/Shared/_NavBarLayout.cshtml";
+    ViewBag.Title = "Search Events";
+}
+@model Application.ViewModels.EventSearchViewModel
+@using Domain.Enums;
+
+<link rel="stylesheet" href="/css/layout.css">
+<link rel="stylesheet" href="/css/events-page.css">
+<div class="content">
+    <div class="container">
+        <div class="heading-and-create">
+            <p class="search-heading">Search Events</p>
+            <div class="create-event-container"><a asp-controller="Events" asp-action="CreateEvent" class="btn-green">Create Event</a></div>
+        </div>
+        <div class="search-bar">
+            <form class="search-events-form" method="post" asp-controller="Events" asp-action="Search">
+                <input asp-for="SearchStr" class="search-input" type="text" value="@Model.SearchStr">
+                <button class="search-btn btn-green" type="submit">Search Events</button>
+            </form>
+        </div>
+
+        <div class="result">
+            @{
+                if (Model.Events != null){
+                    foreach (var eventObj in Model.Events){
+                        <div class="event-item">
+                            <div class="event-item-wrap">
+                                <div class="event-item-left">
+                                    <a asp-controller="Events" asp-action="EventProfile" asp-route-id="@eventObj.Id">@eventObj.Title</a>
+                                    <p class="event-item-description">@eventObj.Description</p>
+                                </div>
+                                <div class="buttons-section">
+                                @{ 
+                                    var participantsId = eventObj.memberships.Select(m => m.UserId).ToArray();
+                                    var organizerId = eventObj.memberships.Where(m=>m.MemberType == MemberType.Organizer)
+                                                                          .Select(m => m.UserId).ToArray();
+
+                                    if(participantsId.Contains(Model.CurrentUserId)){
+                                        if(organizerId.Contains(Model.CurrentUserId)){
+                                            <form asp-controller="Events" asp-action="DeleteEvent" asp-route-eventId="@eventObj.Id">
+                                                <button type="submit">Delete</button>
+                                            </form>
+                                        }
+                                        else{
+                                            <form asp-controller="Events" asp-action="UnSubscribe" asp-route-userId="@Model.CurrentUserId" asp-route-eventId="@eventObj.Id">
+                                                <button type="submit">UnSubscribe</button>
+                                            </form>
+                                        }
+                                    }
+                                    else{
+                                        <form asp-controller="Events" asp-action="Subscribe" asp-route-userId="@Model.CurrentUserId" asp-route-eventId="@eventObj.Id">
+                                            <button type="submit">Subscribe</button>
+                                        </form>
+                                    }
+                                }
+                                </div>
+                                <div class="event-item-tags">
+
+                                    @foreach (var interest in eventObj.Topics){
+                                        <div class="interest-tag">#@interest.Name</div>
+                                    }
+                                </div>
+                                <div class="event-item-times">
+                                    <p class="event-item-starttime">start: <span class="starttime-vlaue">@eventObj.StartTime</span></p>
+                                    <p class="event-item-endtime">end: <span class="endtime-value">@eventObj.StartTime</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            }
+        </div>
+
+    </div>
+</div>

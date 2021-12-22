@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile</title>
+    <link rel="stylesheet" href="../../css/layout.css">
+    <link rel="stylesheet" href="../../css/user-profile.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600&display=swap" rel="stylesheet"> 
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-inner horizontal-flex-container">
+                <a class="logo" asp-controller="Home" asp-action="Index">SearchUp</a>
+                <nav class="nav">
+                        <a class="footer-nav-link" asp-controller="Account" asp-action="Login">Log In</a>
+                        <a class="footer-nav-link" asp-controller="Account" asp-action="Register">Sign Up</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <div class="nav-bar">
+        <div class="container">
+            <nav class="nav-menu">
+                <a class="nav-link" href="#">My profile</a>
+                <a class="nav-link" href="#">Friends</a>
+                <a class="nav-link" href="#">Events</a>
+                <a class="nav-link" href="#">Chats</a>
+            </nav>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="container">
+            <div class="user-profile">
+
+                <div class="sidebar user-profile-sidebar">
+                    <img class="user-avatar" id="user-avatar-main" src="../../images/users/defaultAvatar.png" alt="">
+                    <div class="user-interests">
+                        <div class="interest-tag">#alcohol</div>
+                        <div class="interest-tag">#portals</div>
+                        <div class="interest-tag">#space travels</div>
+                        <div class="interest-tag">#interstellar wars</div>
+                        <div class="interest-tag">#stuff inventing</div>
+                    </div>
+                    <ul class="user-stats">
+                        <li>10 followers</li>
+                        <li>10 follows</li>
+                        <li>10 events</li>
+                    </ul>
+                </div>
+
+                <div class="main-column">
+                    <div class="user-info-main">
+                        <p class="user-name" id="user-name-main">Rick Sanchez</p>
+                        <div class="user-description">
+                            <p><span class="user-prop-heading">Age:</span> <span id="user-age">49 y.o</span></p>
+                            <p class="user-prop-heading">About me:</p><p id="about-user">Listen, Morty, I hate to break it to you, but what people call love is just a chemical reaction that compels animals to breed. It hits hard, Morty, then it slowly fades, leaving you stranded in a failing marriage. I did it. Your parents are gonna do it. Break the cycle, Morty. Rise above. Focus on science.</p>
+                        </div>
+                        <div class="user-interests"></div>
+                    </div>
+                    <div class="users-profile-events">
+                        <div class="user-events-heading"><h1 align="left">Events</h1></div>
+                        
+                        <div class="event-item">
+                            <div class="event-item-wrap">
+                                <div class="event-item-left">
+                                    <a href="" class="event-link"><h4 class="event-item-heading">Party at C4398 galaxy</h4></a>
+                                    <p class="event-item-description">I don`t know what to write here... Use this cords in portal gun(812093; -1023181; 10928310)</p>
+                                </div>
+                                <div class="event-item-tags">
+                                    <div class="interest-tag">#bear</div>
+                                    <div class="interest-tag">#portals</div>
+                                    <div class="interest-tag">#space travels</div>
+                                </div>
+                                <div class="event-item-times">
+                                    <p class="event-item-starttime">start: <span class="starttime-vlaue">today 12AM</span></p>
+                                    <p class="event-item-endtime">end: <span class="endtime-value">today 5PM</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-inner horizontal-flex-container">
+                <nav class="nav">
+                    <a class="nav-link" href="#">About us</a>
+                    <a class="nav-link" href="#">About project</a>
+                </nav>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

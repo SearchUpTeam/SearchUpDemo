@@ -1,0 +1,14 @@
+.tag-remove{
+    cursor: pointer;
+}
+
+.interest-tag{
+    width: fit-content;
+    white-space: nowrap;
+    background-color: #c1c1c1;
+    font-size: 20px;
+    border-radius: 18px;
+    padding: 5px 7px;
+    margin: 5px;
+    align-self: center;
+}

@@ -1,0 +1,153 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    font-family: 'Montserrat', sans-serif;
+    line-height: 1.5;
+    color: #000000;
+    min-height: 100vh;
+    background-color: white;
+}
+
+.container{
+    width: 80%;
+    margin: auto;
+}
+
+.language-container {
+    display: flex;
+    justify-content: flex-end;
+}
+
+header{
+    border-bottom: 1px solid black;
+}
+
+.header-inner, .footer-inner{
+    padding: 20px 0;
+}
+
+a{
+    color: black;
+    text-decoration: none;
+}
+.post-link{
+    background: none;
+    border: none;
+    font-weight: 300;
+    font-size: 36px;
+    font-weight: lighter;
+
+}
+.post-link, a {
+    transition: color 0.2s linear;
+}
+.post-link:hover, a:hover { /* псевдокласи *:hower - змінюють стан об'єктів класу при наведені мишкою */
+    color: #00A676 /* властивість, що змінюється */
+}
+
+.horizontal-flex-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo{
+    font-weight: 200;
+    font-size: 48px;
+    line-height: 59px;
+}
+
+.footer-nav-link{
+    font-size: 25px;
+}
+
+.nav-bar{
+    border-bottom: 1px solid black;
+}
+
+.nav-menu{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.nav-link{
+    margin: 10px 15px;
+    font-weight: 300;
+    font-size: 36px;
+    line-height: 44px;
+}
+
+/*content*/
+
+.content{
+    flex: 1;
+    margin: 30px 0;
+    min-height: 100vh;
+}
+
+/*footer*/
+footer{
+    border-top: black solid 1px;
+}
+
+.footer-inner{
+    height: 70px;
+    justify-content: center;
+}
+
+.sidebar{
+    max-width: min-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.interest-tag{
+    width: fit-content;
+    white-space: nowrap;
+    background-color: #c1c1c1;
+    font-size: 20px;
+    border-radius: 18px;
+    padding: 5px 7px;
+    margin: 5px;
+    align-self: center;
+}
+
+/* EVENT ITEM */
+.event-item{
+    background-color: #e2e2e2;
+    margin: 25px 0;
+}
+.event-item-wrap{
+    padding: 15px;
+    display: flex;
+}
+.event-item-left{
+    text-align: left;
+    font-size: 21px;
+    flex: 3;
+}
+.event-item-title{
+    font-weight: 400;
+}
+
+.event-item-tags{
+    flex: 2;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.event-item-times{
+    flex: 2;
+    font-size: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+

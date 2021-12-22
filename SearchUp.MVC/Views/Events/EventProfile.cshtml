@@ -1,0 +1,108 @@
+﻿@{
+    Layout = "~/Views/Shared/_NavBarLayout.cshtml";
+    ViewBag.Title = "EventProfile";
+}
+@using Domain;
+@model Application.ViewModels.EventProfileViewModel
+
+<link rel="stylesheet" href="/css/event-profile.css">
+
+<div class="top-content">
+    <div class="container">
+        <div class="top">
+            <p class="title-event">@Model.Title</p>
+            <div class="date-time">
+                <p class="date-time-text-start">beggining of this event: @Model.StartTime.Date|@Model.StartTime.Hour:@Model.StartTime.Minute</p>
+                <p class="date-time-text-end">ending of this event: @Model.EndTime.Date|@Model.EndTime.Hour:@Model.EndTime.Minute </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="chatroom">
+    <div class="container">
+        <p><a asp-controller="MyChats" asp-action="Chat" asp-route-id="@Model.ChatId" class="chatroom-link">enter chatroom</a></p>
+    </div>
+</div>
+
+<div class="photo-content">
+    <div class="container">
+        <ul class="nav-photos">
+            @{
+                if (Model.AttachedFiles.Count() != 0)
+                {
+                   @foreach (var file in Model.AttachedFiles)
+                   {
+                        <li class="nav-photo"><img src="@file.Path"></li>
+                   }      
+                }
+                else
+                {
+                    <li style="font-size:25px">There are no attached files ;(</li>
+                }
+            }
+        </ul>
+    </div>
+</div>
+
+<div class="description">
+    <div class="container">
+        <p class="title-description">About event</p>
+        <p class="text-description">@Model.Description</p>
+    </div>
+</div>
+
+<div class="topics">
+    <div class="container">
+        <ul class="nav-topics">
+            @{
+                if (Model.Topics.Count() != 0)
+                {
+                    @foreach (var interest in Model.Topics)
+                    {
+                        <li class="nav-topic">#@interest.Name</li>
+                    }
+                }
+                else
+                {
+                    <li style="font-size:25px">There are no topics ;(</li>
+                }
+            }
+        </ul>
+    </div>
+</div>
+
+<div class="participants-name">
+    <div class="container">
+        <p>Participants</p>
+    </div>
+</div>
+
+<div class="participants">
+    <div class="container">
+        <ul class="nav-participants">
+            @{
+                if (Model.Participants.Count() != 0)
+                {
+                    @foreach (var member in Model.Participants)
+                    {
+                            <li class="nav-participant">
+                            <a asp-controller="UserProfile" asp-action="Index" asp-route-id="@member.Id">
+                            @{
+                                var currentAvatar = member.Avatars != null && member.Avatars.Count() > 0? member.Avatars.Last().Path : "defaultAvatar.png";
+                                <img src="@($"/images/users/{currentAvatar}")">
+                                <p>@member.UserName</p>
+                            }
+                            </a>
+                            </li>
+                    }
+                }
+                else
+                {
+                    <li style="font-size:25px">There are no memberships ;(</li>
+                }
+            }
+
+        </ul>
+    </div>
+</div>
