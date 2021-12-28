@@ -3,6 +3,7 @@ using Domain.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 namespace Persistence
 {
@@ -41,6 +42,29 @@ namespace Persistence
             modelBuilder.Entity<ChatMembership>().HasKey(membership => new { membership.UserId, membership.ChatId});
 
             modelBuilder.Entity<InterestTag>().HasAlternateKey(tag => new {tag.Name});
+
+            InterestTag[] tags = new InterestTag[] { 
+                new InterestTag() { Id=1, Name="beer"},
+                new InterestTag() { Id=2, Name="hard metal"},
+                new InterestTag() { Id=3, Name="alternative metal"},
+                new InterestTag() { Id=4, Name="alternative rock"},
+                new InterestTag() { Id=5, Name="programming"},
+                new InterestTag() { Id=6, Name=".net"},
+                new InterestTag() { Id=7, Name="python"},
+                new InterestTag() { Id=8, Name="jsnode"},
+                new InterestTag() { Id=9, Name="onboard games"},
+                new InterestTag() { Id=10, Name="space travels"},
+                new InterestTag() { Id=11, Name="star wars"},
+                new InterestTag() { Id=12, Name="hiking"},
+                new InterestTag() { Id=13, Name="tourism"},
+                new InterestTag() { Id=14, Name="fishing"},
+                new InterestTag() { Id=15, Name="power lifting"},
+                new InterestTag() { Id=16, Name="box"}
+            };
+            foreach (var tag in tags)
+            {
+                modelBuilder.Entity<InterestTag>().HasData(tag);
+            }
 
             base.OnModelCreating(modelBuilder);
         }
