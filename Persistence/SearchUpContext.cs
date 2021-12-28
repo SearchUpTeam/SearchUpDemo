@@ -59,7 +59,7 @@ namespace Persistence
                 new InterestTag() { Id=13, Name="tourism"},
                 new InterestTag() { Id=14, Name="fishing"},
                 new InterestTag() { Id=15, Name="power lifting"},
-                new InterestTag() { Id=16, Name="box"}
+                new InterestTag() { Id=16, Name="boxing"}
             };
             foreach (var tag in tags)
             {
