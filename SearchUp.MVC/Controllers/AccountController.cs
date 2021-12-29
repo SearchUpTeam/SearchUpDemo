@@ -31,7 +31,7 @@ namespace SearchUp.MVC.Controllers
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {                    
-                    return RedirectToAction("Index", "UserProfile");
+                    return RedirectToAction("Index", "UserProfile", new { id = 0});
                 }
                 else
                 {

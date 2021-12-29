@@ -1,6 +1,6 @@
 ﻿@{
     Layout = "~/Views/Shared/_NavBarLayout.cshtml";
-    ViewBag.Title = "UserProfile";
+    ViewBag.Title = "User Profile";
 }
 @using Domain;
 @model Application.ViewModels.UserProfileViewModel
@@ -12,6 +12,20 @@
         @{
             var currentAvatar = Model.Avatars != null&&Model.Avatars.Count() > 0? Model.Avatars.Last().Path : "defaultAvatar.png";
             <img class="user-avatar" id="user-avatar-main" src="@($"/images/users/{currentAvatar}")">
+
+            if(Model.AuthorizedUserId != Model.ViewedUserId)
+            {
+                if (Model.IsFollowedByCurrentUser){
+                    <form class="follow-form" asp-controller="Followings" asp-action="Unfollow" asp-route-followerId="@Model.AuthorizedUserId" asp-route-followedId="@Model.ViewedUserId">
+                        <button class="follow-button" type="submit">Unfollow</button>
+                    </form>
+                } 
+                else{
+                    <form class="follow-form" asp-controller="Followings" asp-action="Follow" asp-route-followerId="@Model.AuthorizedUserId" asp-route-followedId="@Model.ViewedUserId">
+                        <button class="follow-button" type="submit">Follow</button>
+                    </form>
+                }     
+            }
         }
         <div class="user-interests">
             @foreach (var interest in Model.Interests){
@@ -20,7 +34,7 @@
         </div>
         <ul class="user-stats">
             <li>@Model.FollowersCount followers</li>
-            <li>@Model.FollowingsCount follows</li>
+            <li>@Model.FollowingsCount followings</li>
             <li>@Model.Events.Count() events</li>
         </ul>
     </div>

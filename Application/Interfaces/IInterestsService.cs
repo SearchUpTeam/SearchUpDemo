@@ -8,10 +8,8 @@ namespace Application.Interfaces
     {
         Task<ICollection<InterestTag>>  GetInterestsBySubstringAsync(string substring, int maxNumOfResults);
         Task<ICollection<InterestTag>> GetInterestsById(IEnumerable<int> idArray);
+        Task AddInterestsToEventAsync(int eventId, IEnumerable<int> idColl);
         Task<ICollection<InterestTag>> GetUserInterestsAsync(int userId);
-        Task<IEnumerable<InterestTag>> GetEventInterestsAsync(int userId);
-        Task CreateInterestTagAsync(InterestTag interestTag);
-        Task DeleteInterestTagAsync(int interestId);
         Task EditUserInterestsByIdAsync(int userId, IList<int> interestsId);
         Task<IEnumerable<InterestTag>> GetNewForUser(int userId);
     }
