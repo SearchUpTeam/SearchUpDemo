@@ -36,19 +36,24 @@ namespace SearchUp.MVC.Controllers
         public async Task<IActionResult> Index(int id)
         {
             User user;
+            int authorizedUserId = (await _userManager.GetUserAsync(User)).Id;
+
             if (id == 0)
                 user = await _userManager.GetUserAsync(User);
             else
                 user = await _userManager.FindByIdAsync(id.ToString());
             
-            var profile = new UserProfileViewModel() { 
+            var profile = new UserProfileViewModel() {
+                AuthorizedUserId = authorizedUserId,
+                ViewedUserId = user.Id,
                 Username = user.UserName, 
                 About = user.About, 
                 Avatars = await _fileService.GetAvatarsAsync(user.Id), 
                 Events = await _eventService.GetVisitedByUserAsync(user.Id),
                 Interests = await _interestsService.GetUserInterestsAsync(user.Id),
                 FollowersCount = await _followingService.CountFollowersAsync(user.Id),
-                FollowingsCount =await _followingService.CountFollowingsAsync(user.Id)
+                FollowingsCount = await _followingService.CountFollowingsAsync(user.Id),
+                IsFollowedByCurrentUser = await _followingService.IsFollowedAsync(authorizedUserId, user.Id)
             };
 
             string path = "D:\\" + user.UserName + ".txt";

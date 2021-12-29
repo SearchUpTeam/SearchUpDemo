@@ -10,5 +10,9 @@ namespace Application.Interfaces
         Task<int> CountFollowingsAsync(int userId);
         Task<int> CountFollowersAsync(int userId);
         Task<IEnumerable<User>> GetFollowersAsync(int userId);
+        Task<bool> IsFollowedAsync(int followerId, int followedId);
+        Task FollowAsync(int followerId, int followedId);
+        Task UnfollowAsync(int followerId, int followedId);
+
     }
 }
